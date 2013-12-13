@@ -1,0 +1,9 @@
+# Simple recipe based on http://stevegrunwell.com/blog/keeping-wordpress-under-version-control-with-git/
+
+# Attempt to load files from production if they're not in our local version
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule (.*) http://cadeauxsucres.com/wp-content/uploads/$1
+</IfModule>
