@@ -1,4 +1,4 @@
-# Simple recipe based on http://stevegrunwell.com/blog/keeping-wordpress-under-version-control-with-git/
+# Based on http://stevegrunwell.com/blog/keeping-wordpress-under-version-control-with-git/
 
 # Exclude these files from the git repo
 wp-content/backup/*

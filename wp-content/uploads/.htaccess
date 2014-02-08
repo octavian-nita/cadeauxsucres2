@@ -1,4 +1,4 @@
-# Simple recipe based on http://stevegrunwell.com/blog/keeping-wordpress-under-version-control-with-git/
+# Based on http://stevegrunwell.com/blog/keeping-wordpress-under-version-control-with-git/
 
 # Attempt to load files from production if they're not in our local version
 <IfModule mod_rewrite.c>
