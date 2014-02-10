@@ -3478,107 +3478,25 @@
 
 	function theme_customize_css()
 	{
-		global $subset;
-		
-		?>
-
-<?php
-	$setting_text_logo_font = get_theme_mod( 'setting_text_logo_font', "" );
-	
-	if ( $setting_text_logo_font != "" )
-	{
-		echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_text_logo_font . $subset . '">';
-	}
-?>
-
-<?php
-	$setting_heading_font = get_theme_mod( 'setting_heading_font', "" );
-	
-	if ( $setting_heading_font != "" )
-	{
-		echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_heading_font . $subset . '">';
-	}
-?>
-
-<?php
-	$setting_menu_font = get_theme_mod( 'setting_menu_font', "" );
-	
-	if ( $setting_menu_font != "" )
-	{
-		echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_menu_font . $subset . '">';
-	}
-?>
-
-<?php
-	$setting_content_font = get_theme_mod( 'setting_content_font', "" );
-	
-	if ( $setting_content_font != "" )
-	{
-		echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_content_font . $subset . '">';
-	}
-?>
-
+        ?>
 <style type="text/css">
 <?php
 	$setting_link_color = get_theme_mod( 'setting_link_color', "" );
-	
 	if ( $setting_link_color != "" )
 	{
 		echo 'a { color: ' . $setting_link_color . '; }' . "\n";
 	}
-?>
 
-<?php
-	$setting_link_hover_color = get_theme_mod( 'setting_link_hover_color', "" );
-	
-	if ( $setting_link_hover_color != "" )
+    $setting_link_hover_color = get_theme_mod('setting_link_hover_color', "");
+                            if ( $setting_link_hover_color != "" )
 	{
 		echo 'a:hover { color: ' . $setting_link_hover_color . '; }' . "\n";
 	}
-?>
 
-<?php
-	$setting_menu_active_color = get_theme_mod( 'setting_menu_active_color', "" );
-	
-	if ( $setting_menu_active_color != "" )
+    $setting_menu_active_color = get_theme_mod('setting_menu_active_color', "");
+                            if ( $setting_menu_active_color != "" )
 	{
 		echo '.main-navigation ul .current_page_item > a, .main-navigation ul .current-menu-item > a { color: ' . $setting_menu_active_color . '; }' . "\n";
-	}
-?>
-
-<?php
-	$setting_text_logo_font = get_theme_mod( 'setting_text_logo_font', "" );
-	
-	if ( $setting_text_logo_font != "" )
-	{
-		echo 'h1.site-title, h1.site-title a { font-family: "' . $setting_text_logo_font . '", Georgia, serif; }' . "\n";
-	}
-?>
-
-<?php
-	$setting_heading_font = get_theme_mod( 'setting_heading_font', "" );
-	
-	if ( $setting_heading_font != "" )
-	{
-		echo 'h1, h2, h3, h4, h5, h6 { font-family: "' . $setting_heading_font . '", Georgia, serif; }' . "\n";
-	}
-?>
-
-<?php
-	$setting_menu_font = get_theme_mod( 'setting_menu_font', "" );
-	
-	if ( $setting_menu_font != "" )
-	{
-		echo '.main-navigation ul li { font-family: "' . $setting_menu_font . '", Georgia, serif; }' . "\n";
-	}
-?>
-
-<?php
-	$setting_content_font = get_theme_mod( 'setting_content_font', "" );
-	
-	if ( $setting_content_font != "" )
-	{
-		echo 'html { font-family: "' . $setting_content_font . '", Georgia, serif; }' . "\n";
 	}
 ?>
 </style>
