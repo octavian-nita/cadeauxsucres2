@@ -82,6 +82,9 @@ h1 a { color:#333; }
 /* FONTS */
 html, button, input, select, textarea, .toggle h4 {
   font-family: 'Old Standard TT', serif;
+  text-shadow: 0 0 1px rgba(32, 32, 32, 0.1);
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-text-stroke: 1px rgba(32, 32, 32, 0.1);
 }
 
 h1, h2, h3, h4, h5, h6, .main-navigation ul li, dt {
@@ -120,11 +123,41 @@ body { color:#444; }
 /* HEADER */
 .site-header { padding-top:1.250em; padding-bottom: 3em; text-align:center; }
 .site-header hgroup { padding: 2.5em 0 1.875em 0; }
-h1.site-title { font-size:6em; line-height:1.3; margin-bottom:.25em; margin-top:0; }
+h1.site-title { font-size: 5em; line-height: 1.3; margin-bottom: .25em; margin-top: 0; }
 h1.site-title img { max-height:200px; }
 /*h1.site-title a { border-bottom:1px dotted #ccc; }*/
 h1.site-title a:hover { color:#000; }
 .site-description { font-size:.8em; font-weight:400; }
+
+/* LOGO */
+.title-line { display: block; }
+
+.title-main { letter-spacing: 0.1875em; }
+
+.creative {
+  font: 0.4em "Signerica Fat";
+  letter-spacing: normal;
+  transform: rotate(-0.0000000002deg);
+}
+
+.tail {
+  position: relative;
+  left: -16px;
+  top: 15px;
+
+  display: inline-block;
+  height: 45px;
+  width: 54px;
+
+  background: url("../images/stroke-small.png") no-repeat;
+}
+
+body {
+  background: url("../images/logo.png") 49% 2% no-repeat;
+  background-size: 12%;
+}
+
+.title-line:last-child { margin-top: 0.30em; }
 
 /* MOBILE NAV */
 .main-navigation div.selector { display:none; margin:0 auto; border:0; }

@@ -53,41 +53,13 @@
         <header class="site-header wrapper" role="banner">
 			<div class="row">
 			    <hgroup>
-					<h1 class="site-title">
-						<?php
-							$logo_type = get_option( 'logo_type', 'Text Logo' );
-							
-							if ( $logo_type == 'Text Logo' )
-							{
-								$select_text_logo = get_option( 'select_text_logo', 'WordPress Site Title' );
-								
-								if ( $select_text_logo == 'WordPress Site Title' )
-								{
-									$text_logo_out = get_bloginfo( 'name' );
-								}
-								else
-								{
-									$text_logo_out = stripcslashes( get_option( 'theme_site_title', "" ) );
-								}
-								// end if
-								
-								?>
-									<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php echo $text_logo_out; ?></a>
-								<?php
-							}
-							else
-							{
-								$logo_image = get_option( 'logo_image', "" );
-								
-								?>
-									<a rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-										<img alt="<?php bloginfo( 'name' ); ?>" src="<?php echo $logo_image; ?>">
-									</a>
-								<?php
-							}
-							// end if
-						?>
-					</h1>
+                    <h1 class="site-title">
+                        <a rel="home" href="<?php echo esc_url(home_url('/')); ?>">
+                            <span class="title-line creative">les<span class="tail"></span></span>
+                            <span class="title-line title-main">Cadeaux Sucrés</span>
+                            <span class="title-line creative">de Mirela</span>
+                        </a>
+                    </h1>
 					<!-- end .site-title -->
 					
 					<h2 class="site-description">
@@ -109,11 +81,6 @@
 					</h2>
 					<!-- end .site-description -->
 			    </hgroup>
-				
-				<?php
-					if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'header_sidebar' ) ) :
-					endif;
-				?>
 				
 			    <nav id="site-navigation" class="main-navigation" role="navigation">
 					<?php
