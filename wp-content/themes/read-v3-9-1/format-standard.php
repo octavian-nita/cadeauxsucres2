@@ -21,27 +21,20 @@
 	
 	<footer class="entry-meta">
 		<span class="post-category">
-			<?php
-				echo __( 'posted in', 'read' );
-				
-				echo ' ';
-				
-				the_category( ', ' );
-			?>
+			<?php // echo __( 'posted in', 'read' ), ' '; the_category( ', ' ); ?>
 		</span>
 		<!-- end .post-category -->
 		
 		<span class="post-date">
-			<?php echo __( 'on', 'read' ); ?> <a href="<?php the_permalink(); ?>" title="<?php the_time(); ?>" rel="bookmark"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00"><?php echo get_the_date(); ?></time></a>
+			<?php // echo __( 'on', 'read' ); ?> <a href="<?php the_permalink(); ?>" title="<?php the_time(); ?>" rel="bookmark"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00"><?php echo get_the_date(); ?></time></a>
 		</span>
 		<!-- end .post-date -->
 		
-		<span class="by-author"> <?php echo __( 'by', 'read' ); ?>
+		<!--span class="by-author"> <?php echo __( 'by', 'read' ); ?>
 			<span class="author vcard">
 				<a class="url fn n" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>" title="<?php echo __( 'View all posts by ', 'read' ) . get_the_author(); ?>" rel="author"><?php the_author(); ?></a>
 			</span>
-			<!-- end .author -->
-		</span>
+		</span-->
 		<!-- end .by-author -->
 		
 		<span class="comments-link">
