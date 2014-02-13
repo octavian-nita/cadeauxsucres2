@@ -82,7 +82,7 @@ h1 a { color:#333; }
 /* FONTS */
 html, button, input, select, textarea, .toggle h4 {
   font-family: 'Old Standard TT', serif;
-  text-shadow: 0 0 1px rgba(32, 32, 32, 0.1);
+  text-shadow: 0 0 2px rgba(32, 32, 32, 0.15);
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-text-stroke: 1px rgba(32, 32, 32, 0.1);
 }
@@ -150,7 +150,16 @@ h1.site-title a:hover { color:#000; }
 /* NAVIGATION */
 .main-navigation { border-style:solid; border-width:1px 0; border-color: #eee; }
 .main-navigation ul { list-style:none; padding:0; margin:0; }
-.main-navigation ul li { position:relative; display:inline-block; margin:0 1.25em; padding:1em 0; max-height: 1.5em; font-size:.9em; }
+
+.main-navigation ul li {
+  position: relative;
+  display: inline-block;
+  margin: 0 1.25em;
+  padding: 0.25em 0;
+  max-height: 1.5em;
+  font-size: 1.25em;
+}
+
 .main-navigation ul li a { display:inline-block; }
 .main-navigation ul .current-menu-item > a { color:#C30; }
 .main-navigation ul li, .main-navigation ul li a { color:#333; }
@@ -171,15 +180,11 @@ h1.site-title a:hover { color:#000; }
 .main-navigation ul ul ul:after { content: " "; position: absolute; top: 1.2em; left: 100%; pointer-events: none; width: 0; height: 0; border:0; border-top: 10px solid #555; border-right: 10px solid transparent; }
 .main-navigation ul ul ul a { font-size:1em; }
 
-.main-navigation {
-/*  font-size: 1.5em;*/
-}
-
 /* SEARCH */
 #search-form { position:relative; }
 #search-form label { position:absolute; font-size:1em; top:0.09em; left:0; cursor:text; }
 #search-form label:hover { color:#777; } 
-#search-form #search { font-size:.9em; color:#888; width:50px; min-width:0; max-width: none; padding:3px 23px 3px 0; border:0; outline:0; background-color: transparent; -moz-box-sizing:content-box;-webkit-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box; }
+#search-form #search { white-space: nowrap; overflow: hidden; vertical-align: bottom; font-size:.9em; color:#888; width:50px; min-width:0; max-width: none; padding:3px 23px 3px 0; border:0; outline:0; background-color: transparent; -moz-box-sizing:content-box;-webkit-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box; }
 #search-form #search:focus { color:#333; border-bottom:1px dotted #ccc; }
 #search-submit { position:absolute; top:.24em; right:0; margin: 0 0 0 -23px; font-size:1em; text-shadow:none; color:#444; border:0; outline:0; padding:0; background:none; }
 #search-submit:hover { color:#000; }
