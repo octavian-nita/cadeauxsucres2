@@ -25,7 +25,7 @@
 		
 		
 		//**********************************
-		// prepeare mobile search form 
+		// prepare mobile search form 
 		var searchForm = $('.main-navigation li:last').clone();
 		searchForm.find('form').attr('id','search-form-mobile');
 		searchForm.find('#search').attr('id','search-mobile-input').attr('placeholder',searchForm.find('label').text());
@@ -120,11 +120,11 @@
 		//**********************************
 		// SEARCH BOX
 		$("#search-form #search").focus(function () {
-			 $(this).stop().animate({ width:140 }).siblings('label').stop(true,true).fadeOut(400);
+			$(this).stop().animate({ width: 195 }).siblings('label').stop(true,true).fadeOut(400);
 		}).blur(function() {
-		  $(this).stop().animate({ width:50 });
+		  $(this).stop().animate({ width: 65 });
 		  if($(this).val() == "") {
-			$(this).siblings('label').stop(true,true).fadeIn(400);
+			  $(this).siblings('label').stop(true,true).fadeIn(400);
 		  }
 		});
 		//**********************************
