@@ -110,17 +110,52 @@
 
 /* ============================================================================================================================================= */
 
+    /**
+     * Compute a better locale based on the 'lang' request parameter and 'cs2-lang' session attribute.
+     */
+    function my_theme_localized( $locale )
+    {
+        $computed_locale = null;
+        $supported_locales = ['ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US'];
+
+        // 01. Check if a language is explicitly requested:
+
+        $lang = mb_strtolower( filter_input( INPUT_GET, 'lang' ) );
+        if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
+            setcookie('cs2-lang', $lang, time() + 60 * 60 * 24 * 356);
+            $computed_locale = $supported_locales[$lang];
+        }
+
+        // 02. Check if a language has already been set:
+
+        if ( !isset( $computed_locale ) ) {
+            $computed_locale = $supported_locales[mb_strtolower( filter_input( INPUT_COOKIE, 'cs2-lang' ) )];
+        }
+
+        if ( !isset( $computed_locale ) ) {
+            foreach (split('[,;]', filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE')) as $accept_language) {
+                $computed_locale = $supported_locales[mb_substr($accept_language, 0, 2)];
+                if (isset($locale)) {
+                    break;
+                }
+            }
+        }
+
+        return isset( $computed_locale ) ? $computed_locale : $locale;
+    }
+
 	function my_theme_setup()
 	{
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
 		
 		$lang_dir = get_template_directory() . '/languages';
 		
-		load_theme_textdomain( 'read', $lang_dir ); 
-		
+		add_filter( 'locale', 'my_theme_localized' );
+		load_theme_textdomain( 'read', $lang_dir );
+        
 		$locale = get_locale();
 		$locale_file = get_template_directory() . "/languages/$locale.php";
-		
+        
 		if ( is_readable( $locale_file ) )
 		{
 			require_once( $locale_file );
