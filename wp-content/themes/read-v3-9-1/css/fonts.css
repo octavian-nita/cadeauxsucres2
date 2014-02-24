@@ -1,0 +1,62 @@
+/* 
+  Created on: Feb 24, 2014
+  Author    : Octavian Theodor NITA (mnothro@yahoo.com)
+*/
+
+@charset "utf-8";
+
+/*
+  @import url('http://fonts.googleapis.com/css?family=Life+Savers:400,700&subset=latin,latin-ext');
+  @import url('http://fonts.googleapis.com/css?family=Andika&subset=latin,latin-ext');
+  @import url('http://fonts.googleapis.com/css?family=Tenor+Sans&subset=latin,latin-ext');
+  @import url('http://fonts.googleapis.com/css?family=Oswald:400,300,700&subset=latin,latin-ext');
+  @import url('http://fonts.googleapis.com/css?family=Anaheim&subset=latin,latin-ext');
+*/
+
+@font-face {
+  font-family: "Old Standard TT";
+  src: url("../fonts/oldstandard-regular.eot");
+  src:
+    url("../fonts/oldstandard-regular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/oldstandard-regular.ttf") format("truetype"),
+    url("../fonts/oldstandard-regular.svg#oldstandardtt") format("svg"),
+    url("../fonts/oldstandard-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open Sans Condensed";
+  src: url("../fonts/opensanscond-light.eot");
+  src:
+    url("../fonts/opensanscond-light.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/opensanscond-light.ttf") format("truetype"),
+    url("../fonts/opensanscond-light.svg#opensanscond-light") format("svg"),
+    url("../fonts/opensanscond-light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Oranienbaum";
+  src: url("../fonts/oranienbaum-regular.eot");
+  src:
+    url("../fonts/oranienbaum-regular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/oranienbaum-regular.svg#oranienbaum-regular") format("svg"),
+    url("../fonts/oranienbaum-regular.ttf") format("truetype"),
+    url("../fonts/oranienbaum-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Signerica Fat";
+  src: url("../fonts/signericafat.eot");
+  src:
+    url("../fonts/signericafat.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/signericafat.svg#signericafat") format("svg"),
+    url("../fonts/signericafat.ttf") format("truetype"),
+    url("../fonts/signericafat.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

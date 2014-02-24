@@ -29,9 +29,9 @@
 		
 		
 		// Register style
-		wp_register_style( 'unifrakturmaguntia', 'http://fonts.googleapis.com/css?family=UnifrakturMaguntia' . $subset, null, null );
-		wp_register_style( 'coustard', 'http://fonts.googleapis.com/css?family=Coustard' . $subset, null, null );
-		wp_register_style( 'lora', 'http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' . $subset, null, null );
+		// wp_register_style( 'unifrakturmaguntia', 'http://fonts.googleapis.com/css?family=UnifrakturMaguntia' . $subset, null, null );
+		// wp_register_style( 'coustard', 'http://fonts.googleapis.com/css?family=Coustard' . $subset, null, null );
+		// wp_register_style( 'lora', 'http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' . $subset, null, null );
 		
 		wp_register_style( 'print', get_template_directory_uri() . '/css/print.css', null, null, 'print' );
 		wp_register_style( 'grid', get_template_directory_uri() . '/css/grid.css', null, null );
@@ -42,6 +42,10 @@
 		wp_register_style( 'flexslider', get_template_directory_uri() . '/css/flexslider.css', null, null );
 		wp_register_style( 'mediaelementplayer', get_template_directory_uri() . '/js/mediaelement/mediaelementplayer.css', null, null );
 		wp_register_style( 'gamma-gallery', get_template_directory_uri() . '/css/gamma-gallery.css', null, null );
+        
+        // fonts:
+        wp_register_style( 'fonts', get_template_directory_uri() . '/css/fonts.css', null, null );
+        
 		wp_register_style( 'main', get_template_directory_uri() . '/css/main.css', null, null );
 		wp_register_style( 'fancybox', get_template_directory_uri() . '/css/jquery.fancybox-1.3.4.css', null, null );
 		wp_register_style( 'wp-fix', get_template_directory_uri() . '/css/wp-fix.css', null, null );
@@ -111,7 +115,7 @@
 /* ============================================================================================================================================= */
 
     /**
-     * Compute a better locale based on the 'lang' request parameter and 'cs2-lang' session attribute.
+     * Compute a better locale based on the 'lang' request variable and / or the 'cs2-lang' cookie.
      */
     function my_theme_localized( $locale )
     {
@@ -120,22 +124,27 @@
 
         // 01. Check if a language is explicitly requested:
 
-        $lang = mb_strtolower( filter_input( INPUT_GET, 'lang' ) );
+        $lang = trim( mb_strtolower( filter_input( INPUT_GET, 'lang' ) ) );
         if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
             setcookie('cs2-lang', $lang, time() + 60 * 60 * 24 * 356);
             $computed_locale = $supported_locales[$lang];
         }
 
-        // 02. Check if a language has already been set:
+        // 02. Check if a language has already been set in a cookie:
 
         if ( !isset( $computed_locale ) ) {
-            $computed_locale = $supported_locales[mb_strtolower( filter_input( INPUT_COOKIE, 'cs2-lang' ) )];
+            $lang = trim( mb_strtolower( filter_input( INPUT_COOKIE, 'cs2-lang' ) ) );
+            if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
+                $computed_locale = $supported_locales[$lang];
+            }
         }
 
+        // 03. Check if the browser accepts one of the supported languages:
+
         if ( !isset( $computed_locale ) ) {
-            foreach (split('[,;]', filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE')) as $accept_language) {
+            foreach (mb_split('[,;]', filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE')) as $accept_language) {
                 $computed_locale = $supported_locales[mb_substr($accept_language, 0, 2)];
-                if (isset($locale)) {
+                if ( isset( $computed_locale ) ) {
                     break;
                 }
             }

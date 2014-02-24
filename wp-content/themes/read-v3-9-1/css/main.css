@@ -6,54 +6,6 @@
 
 @charset "utf-8";
 
-@font-face {
-  font-family: "Old Standard TT";
-  src: url("../fonts/oldstandard-regular.eot");
-  src:
-    url("../fonts/oldstandard-regular.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/oldstandard-regular.ttf") format("truetype"),
-    url("../fonts/oldstandard-regular.svg#oldstandardtt") format("svg"),
-    url("../fonts/oldstandard-regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Josefin Slab";
-  src: url("../fonts/josefinslab-regular.eot");
-  src:
-    url("../fonts/josefinslab-regular.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/josefinslab-regular.ttf") format("truetype"),
-    url("../fonts/josefinslab-regular.svg#josefinslab") format("svg"),
-    url("../fonts/josefinslab-regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Oranienbaum";
-  src: url("../fonts/oranienbaum-regular.eot");
-  src:
-    url("../fonts/oranienbaum-regular.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/oranienbaum-regular.svg#oranienbaum-regular") format("svg"),
-    url("../fonts/oranienbaum-regular.ttf") format("truetype"),
-    url("../fonts/oranienbaum-regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Signerica Fat";
-  src: url("../fonts/signericafat.eot");
-  src:
-    url("../fonts/signericafat.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/signericafat.svg#signericafat") format("svg"),
-    url("../fonts/signericafat.ttf") format("truetype"),
-    url("../fonts/signericafat.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* -------------------------------------------- */
 /* GENERIC */
 html { font-size:100%; }
@@ -88,7 +40,8 @@ html, button, input, select, textarea, .toggle h4 {
 }
 
 h1, h2, h3, h4, h5, h6, .main-navigation ul li, dt {
-  font-family: "Josefin Slab", sans-serif;
+  font-family: "Open Sans Condensed", Tahoma, Verdana, Arial, sans-serif;
+  font-weight: 300;
 }
 
 h1.site-title, h1.site-title a {
