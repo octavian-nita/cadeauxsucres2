@@ -18,13 +18,13 @@
 }
 
 @font-face {
-  font-family: "Open Sans Condensed";
-  src: url("../fonts/opensanscond-light.eot");
+  font-family: "Antonio Light";
+  src: url("../fonts/antonio-light.eot");
   src:
-    url("../fonts/opensanscond-light.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/opensanscond-light.ttf") format("truetype"),
-    url("../fonts/opensanscond-light.svg#opensanscond-light") format("svg"),
-    url("../fonts/opensanscond-light.woff") format("woff");
+    url("../fonts/antonio-light.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/antonio-light.ttf") format("truetype"),
+    url("../fonts/antonio-light.svg#antonio-light") format("svg"),
+    url("../fonts/antonio-light.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
