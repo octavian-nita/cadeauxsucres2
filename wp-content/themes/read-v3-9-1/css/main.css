@@ -1037,3 +1037,39 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 	/* BLOG */
 	.mejs-audio { max-width: 280px; }
 }
+
+/* *** RECIPE STYLING *** */
+
+/*
+ * 1. Positioning         (position, right, top, z-index, ...)
+ * 2. Display & Box Model (border, box-sizing, display, height, margin, overflow, padding, width, ...)
+ * 3. Color               (background, color, ...)
+ * 4. Text                (font, line-height, text-align, ...)
+ * 5. Other               (cursor, ...)
+ */
+
+.recipe {
+  position: relative;
+  font-family: "LM Mono Light 10", monospaced;
+}
+
+.recipe h2 {
+  font: bold 1.2em "LM Mono Light 10", monospaced;
+}
+
+.recipe ul li {
+  border-bottom: 1px solid #444444;
+  list-style: none;
+}
+
+.ingredients, .method {
+  float: left;
+  padding: 1%;
+  width: 45%;
+}
+
+.ingredients {
+}
+
+.method {
+}
