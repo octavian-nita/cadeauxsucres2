@@ -153,14 +153,21 @@
 
         return isset( $computed_locale ) ? $computed_locale : $locale;
     }
+    
+    function my_get_the_date_localized( $the_date )
+    {
+        echo 'BOBO: ', gettype($the_date);
+        return __( $the_date );
+    }
 
 	function my_theme_setup()
 	{
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
 		
 		$lang_dir = get_template_directory() . '/languages';
-		
+        
 		add_filter( 'locale', 'my_theme_localized' );
+        add_filter( 'get_the_date', 'my_get_the_date_localized' );
 		load_theme_textdomain( 'read', $lang_dir );
         
 		$locale = get_locale();

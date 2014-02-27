@@ -37,13 +37,6 @@
 		</span-->
 		<!-- end .by-author -->
 		
-		<span class="comments-link">
-			<?php
-				comments_popup_link( __( '0 Comment', 'read' ), __( '1 Comment', 'read' ), __( '% Comments', 'read' ) );
-			?>
-		</span>
-		<!-- end .comments-link -->
-		
 		<?php
 			edit_post_link( __( 'Edit', 'read' ), '<span class="edit-link">', '</span>' );
 		?>
@@ -85,5 +78,14 @@
 		?>
 	</div>
 	<!-- end .entry-content -->
+	
+	<div class="entry-meta">
+		<span class="comments-link">
+			<?php
+				comments_popup_link( __( '0 Comment', 'read' ), __( '1 Comment', 'read' ), __( '% Comments', 'read' ) );
+			?>
+		</span>
+		<!-- end .comments-link -->
+	</div>
 </article>
 <!-- end .post -->
