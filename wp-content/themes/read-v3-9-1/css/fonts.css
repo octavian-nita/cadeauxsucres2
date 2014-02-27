@@ -18,6 +18,18 @@
 }
 
 @font-face {
+  font-family: "LM Mono 10";
+  src: url("../fonts/lmmono10-regular.eot");
+  src:
+    url("../fonts/lmmono10-regular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/lmmono10-regular.ttf") format("truetype"),
+    url("../fonts/lmmono10-regular.svg#lmmono10-regular") format("svg"),
+    url("../fonts/lmmono10-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Antonio Light";
   src: url("../fonts/antonio-light.eot");
   src:
@@ -34,8 +46,8 @@
   src: url("../fonts/oranienbaum-regular.eot");
   src:
     url("../fonts/oranienbaum-regular.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/oranienbaum-regular.svg#oranienbaum-regular") format("svg"),
     url("../fonts/oranienbaum-regular.ttf") format("truetype"),
+    url("../fonts/oranienbaum-regular.svg#oranienbaum-regular") format("svg"),
     url("../fonts/oranienbaum-regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;

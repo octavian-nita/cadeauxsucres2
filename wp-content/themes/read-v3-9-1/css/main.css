@@ -1049,27 +1049,23 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
  */
 
 .recipe {
-  position: relative;
-  font-family: "LM Mono Light 10", monospaced;
+  font-family: "LM Mono 10", monospaced;
 }
 
 .recipe h2 {
-  font: bold 1.2em "LM Mono Light 10", monospaced;
+  font: bold 1.2em "LM Mono 10", monospaced;
 }
 
 .recipe ul li {
   border-bottom: 1px solid #444444;
+  margin-left: -1.6em;
   list-style: none;
 }
 
 .ingredients, .method {
   float: left;
+  margin-left: 2%;
+  min-width: 320px;
   padding: 1%;
   width: 45%;
-}
-
-.ingredients {
-}
-
-.method {
 }
