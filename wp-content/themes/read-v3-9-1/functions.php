@@ -120,7 +120,7 @@
     /**
      * Compute a better locale based on the 'lang' request variable and / or the 'cs2-lang' cookie.
      */
-    function theme_localize( $locale )
+    function theme_locale( $locale )
     {
         $computed_locale = null;
         $supported_locales = ['ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US'];
@@ -156,10 +156,15 @@
 
         return isset( $computed_locale ) ? $computed_locale : $locale;
     }
+    
+    function the_title_localized( $title )
+    {
+        return __( $title, 'read' );
+    }
 
     function get_the_date_localized( $the_date )
     {
-        global $date_formatter, $post;
+        global $date_formatter;
         return $date_formatter ? $date_formatter->format( mysql2date( 'U', get_post()->post_date ) ) : $the_date;
     }
 
@@ -168,7 +173,8 @@
 		global $date_formatter;
 		
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
-		add_filter( 'locale', 'theme_localize' );
+		add_filter( 'locale', 'theme_locale' );
+		add_filter( 'the_title', 'the_title_localized' );
 		add_filter( 'get_the_date', 'get_the_date_localized' );
 		
 		$lang_dir = get_template_directory() . '/languages';
