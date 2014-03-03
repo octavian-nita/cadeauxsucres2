@@ -115,10 +115,12 @@
 
 /* ============================================================================================================================================= */
 
+    $date_formatter = null;
+
     /**
      * Compute a better locale based on the 'lang' request variable and / or the 'cs2-lang' cookie.
      */
-    function my_theme_localized( $locale )
+    function theme_localize( $locale )
     {
         $computed_locale = null;
         $supported_locales = ['ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US'];
@@ -144,8 +146,9 @@
 
         if ( !isset( $computed_locale ) ) {
             foreach ( mb_split( '[,;]', filter_input( INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE' ) ) as $accept_language ) {
-                $computed_locale = $supported_locales[mb_substr( $accept_language, 0, 2 )];
-                if ( isset( $computed_locale ) ) {
+                $lang = mb_substr( $accept_language, 0, 2 );
+                if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
+                    $computed_locale = $supported_locales[$lang];
                     break;
                 }
             }
@@ -153,30 +156,32 @@
 
         return isset( $computed_locale ) ? $computed_locale : $locale;
     }
-    
-    function my_get_the_date_localized( $the_date )
+
+    function get_the_date_localized( $the_date )
     {
-        echo 'BOBO: ', gettype($the_date);
-        return __( $the_date );
+        global $date_formatter, $post;
+        return $date_formatter ? $date_formatter->format( mysql2date( 'U', get_post()->post_date ) ) : $the_date;
     }
 
 	function my_theme_setup()
 	{
+		global $date_formatter;
+		
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
+		add_filter( 'locale', 'theme_localize' );
+		add_filter( 'get_the_date', 'get_the_date_localized' );
 		
 		$lang_dir = get_template_directory() . '/languages';
-        
-		add_filter( 'locale', 'my_theme_localized' );
-        add_filter( 'get_the_date', 'my_get_the_date_localized' );
 		load_theme_textdomain( 'read', $lang_dir );
-        
+		
 		$locale = get_locale();
 		$locale_file = get_template_directory() . "/languages/$locale.php";
-        
 		if ( is_readable( $locale_file ) )
 		{
 			require_once( $locale_file );
 		}
+		
+		$date_formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
 	}
 	// end my_theme_setup
 	

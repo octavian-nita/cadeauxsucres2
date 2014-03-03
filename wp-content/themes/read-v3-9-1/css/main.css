@@ -1072,3 +1072,22 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   padding: 1%;
   width: 45%;
 }
+
+/* *** HACKS *** */
+
+/* Hide the title in the About page and style a bit: */
+
+.page-id-24 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.page-id-24 .avatar {
+  position: relative;
+  top: -30px;
+  margin: 0 auto;
+}
+
+.page-id-24 .entry-header {
+  display: none;
+}
