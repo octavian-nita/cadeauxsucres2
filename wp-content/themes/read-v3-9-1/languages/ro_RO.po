@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Read v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-03-02 18:21+0100\n"
+"PO-Revision-Date: 2014-03-04 00:52+0100\n"
 "Last-Translator: Octavian Nita <mnothro@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -289,7 +289,7 @@ msgstr "Continuare <span class=\"meta-nav\">&rarr;</span>"
 # @ read
 #: functions.php:200
 msgid "Home"
-msgstr "Acasă"
+msgstr "Pagina principală"
 
 # @ read
 #: functions.php:245 functions.php:326
@@ -750,3 +750,11 @@ msgstr "POSTARE URMĂTOARE"
 #: tag.php:12
 msgid "Posts Tagged"
 msgstr "Postări etichetate"
+
+# @ read
+msgid "Leave a Reply"
+msgstr "Comentează"
+
+# @ read
+msgid "Post Comment"
+msgstr "Comentează"
