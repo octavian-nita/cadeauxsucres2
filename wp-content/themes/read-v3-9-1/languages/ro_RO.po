@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Read v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-03-04 00:52+0100\n"
+"PO-Revision-Date: 2014-03-04 16:00+0100\n"
 "Last-Translator: Octavian Nita <mnothro@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -652,12 +652,12 @@ msgstr "Categorii"
 # @ read
 #: page-contact.php:37
 msgid "Where am I in this world?"
-msgstr "Unde sunt eu în această lume?"
+msgstr "Unde sunt eu în lume?"
 
 # @ read
 #: page-contact.php:57
 msgid "Please feel free to contact me about anything."
-msgstr "Vă rugăm să nu ezitați să mă contactați indiferent pentru ce."
+msgstr "Nu ezitați să mă contactați indiferent pentru ce."
 
 # @ read
 #: page-contact.php:63
@@ -756,5 +756,42 @@ msgid "Leave a Reply"
 msgstr "Comentează"
 
 # @ read
+msgid "Leave a Reply to %s"
+msgstr "Comentează pentru %s"
+
+# @ read
 msgid "Post Comment"
 msgstr "Comentează"
+
+# @ read
+msgid "Cancel Reply"
+msgstr "Anulează comentariul"
+
+# @ read
+msgid "Your email address will not be published."
+msgstr "Adresa de email nu va fi publicata."
+
+# @ read
+msgid "Required fields are marked %s"
+msgstr "Câmpurile obligatorii sunt marcate %s"
+
+# @ read
+msgid ""
+"You may use these <abbr title=\"HyperText Markup Language\">HTML</abbr> tags "
+"and attributes: %s"
+msgstr ""
+"Se pot utiliza următoarele etichete și atribute <abbr title=\"HyperText "
+"Markup Language\">HTML</abbr>: %s"
+
+# @ read
+msgid "Name"
+msgstr "Nume"
+
+# @ read
+msgid "Website"
+msgstr "Site web"
+
+# @ read
+msgctxt "noun"
+msgid "Comment"
+msgstr "Comentariu"

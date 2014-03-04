@@ -123,7 +123,7 @@
     function theme_locale( $locale )
     {
         $computed_locale = null;
-        $supported_locales = ['ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US'];
+        $supported_locales = array( 'ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US' );
 
         // 01. Check if a language is explicitly requested:
 
