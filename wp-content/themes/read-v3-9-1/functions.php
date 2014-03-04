@@ -116,13 +116,14 @@
 /* ============================================================================================================================================= */
 
     $date_formatter = null;
+    $computed_locale = null;
 
     /**
      * Compute a better locale based on the 'lang' request variable and / or the 'cs2-lang' cookie.
      */
-    function theme_locale( $locale )
+    function compute_locale()
     {
-        $computed_locale = null;
+        global $computed_locale;
         $supported_locales = array( 'ro' => 'ro_RO', 'fr' => 'fr_FR', 'en' => 'en_US' );
 
         // 01. Check if a language is explicitly requested:
@@ -153,16 +154,17 @@
                 }
             }
         }
-
+    }
+    
+    function my_theme_locale( $locale )
+    {
+        global $computed_locale;
         return isset( $computed_locale ) ? $computed_locale : $locale;
     }
     
-    function the_title_localized( $title )
-    {
-        return __( $title, 'read' );
-    }
+    function the_title_localized( $title ) { return __( $title, 'read' ); }
 
-    function get_the_date_localized( $the_date )
+    function get_date_localized( $the_date )
     {
         global $date_formatter;
         return $date_formatter ? $date_formatter->format( mysql2date( 'U', get_post()->post_date ) ) : $the_date;
@@ -171,11 +173,13 @@
 	function my_theme_setup()
 	{
 		global $date_formatter;
+		compute_locale();
 		
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
-		add_filter( 'locale', 'theme_locale' );
+		add_filter( 'locale', 'my_theme_locale' );
 		add_filter( 'the_title', 'the_title_localized' );
-		add_filter( 'get_the_date', 'get_the_date_localized' );
+		add_filter( 'get_the_date', 'get_date_localized' );
+		add_filter( 'get_comment_date', 'get_date_localized' );
 		
 		$lang_dir = get_template_directory() . '/languages';
 		load_theme_textdomain( 'read', $lang_dir );
