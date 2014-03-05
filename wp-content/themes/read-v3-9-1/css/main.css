@@ -1073,6 +1073,10 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   width: 45%;
 }
 
+.post-list li {
+  font-size: 1.4em;
+}
+
 /* *** HACKS *** */
 
 /* Hide the title in the About page and style a bit: */

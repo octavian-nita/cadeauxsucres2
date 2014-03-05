@@ -15,12 +15,7 @@ Template Name: Archive 2
 				if ( have_posts() ) :
 					while ( have_posts() ) : the_post();
 						?>
-							<article id="post-<?php the_ID(); ?>" <?php post_class( 'page hentry clearfix' ); ?>>
-								<header class="entry-header">
-									<h1 class="entry-title"><?php the_title(); ?></h1>
-								</header>
-								<!-- end .entry-header -->
-								
+							<article id="post-<?php the_ID(); ?>" <?php post_class( 'page hentry clearfix' ); ?> style="padding-top: 0;">
 								<div class="entry-content">
 									<?php
 										the_content();
@@ -65,7 +60,6 @@ Template Name: Archive 2
 									
 								    <div class="post-list archives-list archives-tag archives-by-month">
 										<h2><?php echo __( 'Archives by month', 'read' ); ?></h2>
-										
 										<ul>
 											<?php
 												$args = array(  'format' => 'custom', 
@@ -77,40 +71,6 @@ Template Name: Archive 2
 										</ul>
 								    </div>
 								    <!-- end Archives by month -->
-									
-								    <div class="post-list archives-list archives-tag archives-by-category">
-										<h2><?php echo __( 'Archives by category', 'read' ); ?></h2>
-										
-										<ul>
-											<?php
-												$categories = get_categories();
-												
-												foreach ( $categories as $category )
-												{
-													echo '<li><a href="' . get_category_link( $category->term_id ) . '">' . $category->name . '</a></li> ';
-												}
-											?>											
-										</ul>
-								    </div>
-								    <!-- end Archives by category -->
-								    
-								    <div class="post-list archives-list archives-tag archives-by-format">
-										<h2><?php echo __( 'Archives by format', 'read' ); ?></h2>
-										
-										<ul>
-											<?php
-												$post_formats = get_theme_support( 'post-formats' );
-												
-												foreach ( $post_formats[0] as $post_format )
-												{
-													$format_link = get_post_format_link( $post_format );
-													
-													echo '<li><a href="' . $format_link . '">' . $post_format . '</a></li> ';
-												}
-											?>
-										</ul>
-								    </div>
-								    <!-- end Archives by format -->
 								</div>
 								<!-- end .entry-content -->
 							</article>

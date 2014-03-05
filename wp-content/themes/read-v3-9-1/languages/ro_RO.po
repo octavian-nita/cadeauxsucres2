@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Read v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-03-04 16:00+0100\n"
+"PO-Revision-Date: 2014-03-05 12:35+0100\n"
 "Last-Translator: Octavian Nita <mnothro@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -795,3 +795,11 @@ msgstr "Site web"
 msgctxt "noun"
 msgid "Comment"
 msgstr "Comentariu"
+
+# @ read
+msgid "Last 30 posts"
+msgstr "Ultimele 30 de postări"
+
+# @ read
+msgid "Archives by month"
+msgstr "Pe luni"
