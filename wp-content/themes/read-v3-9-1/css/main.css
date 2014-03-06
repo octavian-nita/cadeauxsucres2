@@ -1074,7 +1074,11 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 }
 
 .post-list li {
-  font-size: 1.4em;
+  font-size: 1.1em;
+}
+
+.post-list h3 {
+  font-size: 1.3em;
 }
 
 /* *** HACKS *** */

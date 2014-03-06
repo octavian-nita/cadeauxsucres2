@@ -117,6 +117,36 @@
 
     $date_formatter = null;
     $computed_locale = null;
+    $months_localized = array(
+        'ro_RO' => array(
+            'January' => 'ianuarie',
+            'February' => 'februarie',
+            'March' => 'martie',
+            'April' => 'aprilie',
+            'May' => 'mai',
+            'June' => 'iunie',
+            'July' => 'iulie',
+            'August' => 'august',
+            'September' => 'septembrie',
+            'October' => 'octombrie',
+            'November' => 'noiembrie',
+            'December' => 'decembrie'
+        ),
+        'fr_FR' => array(
+            'January' => 'janvier',
+            'February' => 'février',
+            'March' => 'mars',
+            'April' => 'avril',
+            'May' => 'mai',
+            'June' => 'juin',
+            'July' => 'juillet',
+            'August' => 'août',
+            'September' => 'septembre',
+            'October' => 'octobre',
+            'November' => 'novembre',
+            'December' => 'décembre'
+        )
+    );
 
     /**
      * Compute a better locale based on the 'lang' request variable and / or the 'cs2-lang' cookie.
@@ -155,19 +185,40 @@
             }
         }
     }
-    
+
+    function the_title_localized( $title ) { return __( $title, 'read' ); }
+
+    function get_date_localized( $date ) {
+        global $date_formatter;
+        return $date_formatter ? $date_formatter->format( mysql2date( 'U', $date ) ) : $date;
+    }
+
+    function get_the_date_localized( $the_date )
+    {
+        global $date_formatter;
+        return $date_formatter ? $date_formatter->format( mysql2date( 'U', get_post()->post_date ) ) : $the_date;
+    }
+
+    function get_archives_link_localized( $html )
+    {
+        global $months_localized;
+
+        $locale = get_locale();
+        if ( !array_key_exists ( $locale, $months_localized ) ) {
+            return $html;
+        }
+
+        mb_ereg_search_init(
+            $html, 'January|February|March|April|May|June|July|August|September|October|November|December' );
+        $month = mb_ereg_search_regs();
+
+        return mb_ereg_replace ( $month[0], $months_localized[$locale][$month[0]], $html );
+    }
+
     function my_theme_locale( $locale )
     {
         global $computed_locale;
         return isset( $computed_locale ) ? $computed_locale : $locale;
-    }
-    
-    function the_title_localized( $title ) { return __( $title, 'read' ); }
-
-    function get_date_localized( $the_date )
-    {
-        global $date_formatter;
-        return $date_formatter ? $date_formatter->format( mysql2date( 'U', get_post()->post_date ) ) : $the_date;
     }
 
 	function my_theme_setup()
@@ -178,8 +229,9 @@
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
 		add_filter( 'locale', 'my_theme_locale' );
 		add_filter( 'the_title', 'the_title_localized' );
-		add_filter( 'get_the_date', 'get_date_localized' );
+		add_filter( 'get_the_date', 'get_the_date_localized' );
 		add_filter( 'get_comment_date', 'get_date_localized' );
+		add_filter( 'get_archives_link', 'get_archives_link_localized' );
 		
 		$lang_dir = get_template_directory() . '/languages';
 		load_theme_textdomain( 'read', $lang_dir );

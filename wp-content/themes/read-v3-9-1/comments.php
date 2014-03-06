@@ -79,19 +79,24 @@
 		);
 
 		comment_form( array(
-			'fields'               => apply_filters( 'comment_form_default_fields', $fields ),
-			'comment_field'	       =>
+			'fields' => apply_filters( 'comment_form_default_fields', $fields ),
+			'comment_field' =>
 				'<p class="comment-form-comment"><label for="comment">' . _x( 'Comment', 'noun', 'read' ) .
-            	'</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>',
-			'title_reply'          => __( 'Leave a Reply', 'read' ),
-			'title_reply_to'       => __( 'Leave a Reply to %s', 'read' ),
-			'label_submit'         => __( 'Post Comment', 'read' ),
-			'cancel_reply_link'    => __( 'Cancel Reply', 'read' ),
+				'</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>',
+			'logged_in_as' =>
+				'<p class="logged-in-as">' .
+				sprintf( __( 'Logged in as <a href="%1$s">%2$s</a>. <a href="%3$s" title="Log out of this account">Log out?</a>', 'read' ),
+				          get_edit_user_link(), $user_identity, wp_logout_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ) .
+				'</p>',
+			'title_reply' => __( 'Leave a Reply', 'read' ),
+			'title_reply_to' => __( 'Leave a Reply to %s', 'read' ),
+			'label_submit' => __( 'Post Comment', 'read' ),
+			'cancel_reply_link' => __( 'Cancel Reply', 'read' ),
 			'comment_notes_before' =>
 				'<p class="comment-notes">' .
 				__( 'Your email address will not be published.', 'read' ) .
 				sprintf( ' ' . __('Required fields are marked %s', 'read'), '<span class="required">*</span>' ) . '</p>',
-			'comment_notes_after'  =>
+			'comment_notes_after' =>
 				'<p class="form-allowed-tags">' .
 				sprintf( __( 'You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s', 'read' ),
 						 ' <code>' . allowed_tags() . '</code>' ) . '</p>'
