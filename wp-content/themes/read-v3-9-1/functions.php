@@ -162,6 +162,7 @@
         if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
             setcookie('cs2-lang', $lang, time() + 60 * 60 * 24 * 356);
             $computed_locale = $supported_locales[$lang];
+            return;
         }
 
         // 02. Check if a language has already been set in a cookie:
@@ -170,6 +171,7 @@
             $lang = trim( mb_strtolower( filter_input( INPUT_COOKIE, 'cs2-lang' ) ) );
             if ( $lang && array_key_exists( $lang, $supported_locales ) ) {
                 $computed_locale = $supported_locales[$lang];
+                return;
             }
         }
 
@@ -184,6 +186,9 @@
                 }
             }
         }
+
+        // Currently, this is just a hack: if no explicit language is requested or set, default to ro_RO!
+        $computed_locale = 'ro_RO';
     }
 
     function the_title_localized( $title ) { return __( $title, 'read' ); }

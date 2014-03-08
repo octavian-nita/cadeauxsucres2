@@ -1073,12 +1073,34 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   width: 45%;
 }
 
+/* *** OTHERS *** */
+
 .post-list li {
   font-size: 1.1em;
 }
 
 .post-list h3 {
   font-size: 1.3em;
+}
+
+.food-icon {
+  background-image: url("../images/food/48x48/cake1.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 48px;
+  margin-top: 7%;
+}
+
+.collage.half-left {
+  margin-right: 0.1%;
+  min-width: 320px;
+  width: 49.9%;
+}
+
+.collage.half-right {
+  margin-left: 0.1%;
+  min-width: 320px;
+  width: 49.9%;
 }
 
 /* *** HACKS *** */
