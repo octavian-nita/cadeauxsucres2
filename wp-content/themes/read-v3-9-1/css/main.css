@@ -6,7 +6,6 @@
 
 @charset "utf-8";
 
-
 /* -------------------------------------------- */
 /* GENERIC */
 html { font-size:100%; }
@@ -989,7 +988,6 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 	/* POST LIST */
 	.post-list h3 { float: none; font-size: 1em; }
 	.post-list .date { float: none; }
-	
 }
 
 .tail {
@@ -1068,7 +1066,7 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 .ingredients, .method {
   float: left;
   margin-left: 2%;
-  min-width: 320px;
+  min-width: 262px;
   padding: 1%;
   width: 45%;
 }
@@ -1093,13 +1091,13 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 
 .collage.half-left {
   margin-right: 0.1%;
-  min-width: 320px;
+  min-width: 262px;
   width: 49.9%;
 }
 
 .collage.half-right {
   margin-left: 0.1%;
-  min-width: 320px;
+  min-width: 262px;
   width: 49.9%;
 }
 
@@ -1120,4 +1118,11 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 
 .page-id-24 .entry-header {
   display: none;
+}
+
+@media (max-width: 767px) {
+  /* !!! 2-column small layouts (recipes, 2-column photo collages) */  
+  .collage.half-left, .collage.half-right, .ingredients, .method {
+    width: 100% !important;
+  }
 }
