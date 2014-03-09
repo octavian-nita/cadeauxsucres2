@@ -1082,11 +1082,18 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 }
 
 .food-icon {
-  background-image: url("../images/food/48x48/cake1.png");
   background-repeat: no-repeat;
   background-position: center center;
   height: 48px;
   margin-top: 7%;
+}
+
+.food-icon-cake1 {
+  background-image: url("wp-content/themes/read-v3-9-1/images/food/48x48/cake1.png");
+}
+
+.food-icon-teacup {
+  background-image: url("wp-content/themes/read-v3-9-1/images/food/48x48/teacup.png");
 }
 
 .collage.half-left {
@@ -1123,6 +1130,10 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 @media (max-width: 767px) {
   /* !!! 2-column small layouts (recipes, 2-column photo collages) */  
   .collage.half-left, .collage.half-right, .ingredients, .method {
-    width: 100% !important;
+    float: none !important;
+    clear: both;
+    display: block;
+    margin: 1.8em auto;
+    width: auto !important;
   }
 }
