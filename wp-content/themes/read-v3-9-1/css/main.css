@@ -33,19 +33,19 @@ h1 a { color:#333; }
 /* -------------------------------------------- */
 /* FONTS */
 html, button, input, select, textarea, .toggle h4 {
-  font-family: 'Old Standard TT', serif;
+  font-family: "Old Standard TT", "Bodoni MT", "Book Antiqua", Baskerville, Didot, Georgia, "Times New Roman", serif;
   text-shadow: 0 0 1px rgba(16, 16, 16, 0.1);
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-text-stroke: 1px rgba(16, 16, 16, 0.1);
 }
 
 h1, h2, h3, h4, h5, h6, .main-navigation ul li, dt {
-  font-family: "Antonio Light", Tahoma, Verdana, Arial, sans-serif;
+  font-family: "Antonio Light", "Trebuchet MS", Tahoma, Verdana, Helvetica, Arial, sans-serif;
   font-weight: 300;
 }
 
 h1.site-title, h1.site-title a {
-  font-family: "Oranienbaum", serif;
+  font-family: "Oranienbaum", "Bodoni MT", "Book Antiqua", Baskerville, Didot, Georgia, "Times New Roman", serif;
   font-variant: small-caps;
 }
 
@@ -1050,11 +1050,11 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
  */
 
 .recipe {
-  font-family: "LM Mono 10", monospaced;
+  font-family: "LM Mono 10", "Courier New", "Lucida Sans Typewriter", monospaced;
 }
 
 .recipe h2 {
-  font: bold 1.2em "LM Mono 10", monospaced;
+  font: bold 1.2em "LM Mono 10", "Courier New", "Lucida Sans Typewriter", monospaced;
 }
 
 .recipe ul li {
@@ -1089,11 +1089,11 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 }
 
 .food-icon-cake1 {
-  background-image: url("wp-content/themes/read-v3-9-1/images/food/48x48/cake1.png");
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cake1.png");
 }
 
 .food-icon-teacup {
-  background-image: url("wp-content/themes/read-v3-9-1/images/food/48x48/teacup.png");
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/teacup.png");
 }
 
 .collage.half-left {
@@ -1109,6 +1109,21 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 }
 
 /* *** HACKS *** */
+
+/* Work around Chrome 33+ not rendering local @fontface on initial page load: */
+
+body {
+  -webkit-animation-delay: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-name: fontfix;
+  -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes fontfix {
+  from { opacity: 1; }
+  to   { opacity: 1; }
+}
 
 /* Hide the title in the About page and style a bit: */
 
