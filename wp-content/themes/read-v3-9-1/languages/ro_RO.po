@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Read v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-03-05 22:23+0100\n"
+"PO-Revision-Date: 2014-03-19 18:57+0100\n"
 "Last-Translator: Octavian Nita <mnothro@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -166,7 +166,7 @@ msgstr "Pagina căutată nu a fost găsită"
 # @ read
 #: author.php:12
 msgid "Author Archives"
-msgstr "Arhivele autorului"
+msgstr "Arhiva autorului"
 
 # @ read
 #: author.php:12 category.php:12 date.php:12 header.php:138 search.php:12
@@ -276,7 +276,7 @@ msgstr "Comentariile sunt închise."
 # @ read
 #: date.php:12
 msgid "Date Archives"
-msgstr "Arhive"
+msgstr "Arhivă"
 
 # @ read
 #: format-aside.php:25 format-audio.php:25 format-chat.php:25
@@ -591,7 +591,7 @@ msgid ""
 "You shall not place the %1$s template tag inside the loop on list/archives/"
 "search/etc templates."
 msgstr ""
-"Nu se va plasa eticheta de șablon %1$s în buclă în șabloane listă/arhive/"
+"Nu se va plasa eticheta de șablon %1$s în buclă în șabloane listă/arhivă/"
 "căutare/etc."
 
 # @ read
@@ -642,7 +642,7 @@ msgstr "Caută"
 # @ read
 #: page-archive.php:29
 msgid "Post Archives"
-msgstr "Arhive postări"
+msgstr "Arhivă postări"
 
 # @ read
 #: page-archive.php:49
@@ -769,7 +769,7 @@ msgstr "Anulează comentariul"
 
 # @ read
 msgid "Your email address will not be published."
-msgstr "Adresa de email nu va fi publicata."
+msgstr "Adresa de email nu va fi publicată."
 
 # @ read
 msgid "Required fields are marked %s"

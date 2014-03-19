@@ -58,6 +58,24 @@
   })();
 </script>
 
+<script type="text/javascript" charset="utf-8">
+  window.onload = function() { jQuery('body').hide().show(); };
+
+  WebFontConfig = {
+    google: { families: [ 'Old+Standard+TT:400,400italic,700:latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+
+</script>
+
 </head>
 
 <body <?php body_class(); ?>>
