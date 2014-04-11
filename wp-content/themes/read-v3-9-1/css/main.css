@@ -1129,6 +1129,10 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/dish.png");
 }
 
+.food-icon-preserves {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/preserves.png");
+}
+
 .collage.half-left {
   margin-right: 0.1%;
   min-width: 262px;
