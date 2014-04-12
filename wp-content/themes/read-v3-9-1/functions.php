@@ -5,34 +5,34 @@
 	function theme_enqueue()
 	{
 		$extra_char_set = false;
-		
+
 		global $subset;
-		
+
 		$subset = '&subset=';
-		
-		
+
+
 		if ( get_option( 'char_set_latin', false ) ) { $subset .= 'latin,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_latin_ext', false ) ) { $subset .= 'latin-ext,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_cyrillic', false ) ) { $subset .= 'cyrillic,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_cyrillic_ext', false ) ) { $subset .= 'cyrillic-ext,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_greek', false ) ) { $subset .= 'greek,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_greek_ext', false ) ) { $subset .= 'greek-ext,'; $extra_char_set = true; }
-		
+
 		if ( get_option( 'char_set_vietnamese', false ) ) { $subset .= 'vietnamese,'; $extra_char_set = true; }
-		
+
 		if ( $extra_char_set == false ) { $subset = ""; } else { $subset = substr( $subset, 0, -1 ); }
-		
-		
+
+
 		// Register style
 		// wp_register_style( 'unifrakturmaguntia', 'http://fonts.googleapis.com/css?family=UnifrakturMaguntia' . $subset, null, null );
 		// wp_register_style( 'coustard', 'http://fonts.googleapis.com/css?family=Coustard' . $subset, null, null );
 		// wp_register_style( 'lora', 'http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' . $subset, null, null );
-		
+
 		wp_register_style( 'print', get_template_directory_uri() . '/css/print.css', null, null, 'print' );
 		wp_register_style( 'grid', get_template_directory_uri() . '/css/grid.css', null, null );
 		wp_register_style( 'normalize', get_template_directory_uri() . '/css/normalize.css', null, null );
@@ -42,19 +42,19 @@
 		wp_register_style( 'flexslider', get_template_directory_uri() . '/css/flexslider.css', null, null );
 		wp_register_style( 'mediaelementplayer', get_template_directory_uri() . '/js/mediaelement/mediaelementplayer.css', null, null );
 		wp_register_style( 'gamma-gallery', get_template_directory_uri() . '/css/gamma-gallery.css', null, null );
-        
+
 		// fonts:
 		wp_register_style( 'fonts', get_template_directory_uri() . '/css/fonts.css', null, null );
-        
+
 		wp_register_style( 'main', get_template_directory_uri() . '/css/main.css', null, null );
 		wp_register_style( 'fancybox', get_template_directory_uri() . '/css/jquery.fancybox-1.3.4.css', null, null );
 		wp_register_style( 'wp-fix', get_template_directory_uri() . '/css/wp-fix.css', null, null );
-		
+
 		// Enqueue style
 		// wp_enqueue_style( 'unifrakturmaguntia' );
 		// wp_enqueue_style( 'coustard' );
 		// wp_enqueue_style( 'lora' );
-		
+
 		wp_enqueue_style( 'print' );
 		wp_enqueue_style( 'grid' );
 		wp_enqueue_style( 'normalize' );
@@ -68,8 +68,8 @@
 		wp_enqueue_style( 'main' );
 		wp_enqueue_style( 'fancybox' );
 		wp_enqueue_style( 'wp-fix' );
-		
-		
+
+
 		// Register script
 		wp_register_script( 'detectmobilebrowser', get_template_directory_uri() . '/js/detectmobilebrowser.js', null, null, true );
 		wp_register_script( 'modernizr', get_template_directory_uri() . '/js/modernizr.js', null, null, true );
@@ -89,7 +89,7 @@
 		wp_register_script( 'main', get_template_directory_uri() . '/js/main.js', null, null, true );
 		wp_register_script( 'validate', get_template_directory_uri() . '/js/jquery.validate.min.js', null, null, true );
 		wp_register_script( 'send-mail', get_template_directory_uri() . '/js/send-mail.js', null, null, true );
-		
+
 		// Enqueue script
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'detectmobilebrowser' );
@@ -193,7 +193,8 @@
 
     function the_title_localized( $title ) { return __( $title, 'read' ); }
 
-    function get_date_localized( $date ) {
+    function get_date_localized( $date )
+    {
         global $date_formatter;
         return $date_formatter ? $date_formatter->format( mysql2date( 'U', $date ) ) : $date;
     }
@@ -230,30 +231,31 @@
 	{
 		global $date_formatter;
 		compute_locale();
-		
+
 		add_action( 'wp_enqueue_scripts', 'theme_enqueue' );
 		add_filter( 'locale', 'my_theme_locale' );
 		add_filter( 'the_title', 'the_title_localized' );
 		add_filter( 'get_the_date', 'get_the_date_localized' );
 		add_filter( 'get_comment_date', 'get_date_localized' );
 		add_filter( 'get_archives_link', 'get_archives_link_localized' );
-		
+
 		$lang_dir = get_template_directory() . '/languages';
 		load_theme_textdomain( 'read', $lang_dir );
-		
+
 		$locale = get_locale();
 		$locale_file = get_template_directory() . "/languages/$locale.php";
 		if ( is_readable( $locale_file ) )
 		{
 			require_once( $locale_file );
 		}
-		
-		$date_formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+
+		$date_formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG,
+				                                IntlDateFormatter::NONE, 'Europe/Brussels');
 	}
 	// end my_theme_setup
-	
+
 	add_action( 'after_setup_theme', 'my_theme_setup' );
-	
+
 /* ============================================================================================================================================= */
 
 	function theme_style_css()
@@ -265,7 +267,7 @@
 		<?php
 	}
 	// end theme_style_css
-	
+
 	add_action( 'wp_head', 'theme_style_css' );
 
 /* ============================================================================================================================================= */
@@ -273,7 +275,7 @@
 	function theme_favicons()
 	{
 		$favicon = get_option( 'favicon', "" );
-		
+
 		if ( $favicon != "" )
 		{
 			?>
@@ -283,14 +285,14 @@
 			<?php
 		}
 		// end if
-		
-		
+
+
 		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
-		
+
 		if ( $apple_touch_icon != "" )
 		{
 			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
-			
+
 			?>
 
 <link rel="apple-touch-icon-precomposed" href="<?php echo $apple_touch_icon_no_ext . '-57x57.png'; ?>">
@@ -303,7 +305,7 @@
 		// end if
 	}
 	// end theme_favicons
-	
+
 	add_action( 'wp_head', 'theme_favicons' );
 
 /* ============================================================================================================================================= */
@@ -318,23 +320,23 @@
 		}
 
 		$title .= get_bloginfo( 'name' );
-		
+
 		$site_description = get_bloginfo( 'description', 'display' );
-		
+
 		if ( $site_description && ( is_home() || is_front_page() ) )
 		{
 			$title = "$title $sep $site_description";
 		}
-		
+
 		if ( $paged >= 2 || $page >= 2 )
 		{
 			$title = "$title $sep " . sprintf( __( 'Page %s', 'read' ), max( $paged, $page ) );
 		}
-		
+
 		return $title;
 	}
 	// end theme_wp_title
-	
+
 	add_filter( 'wp_title', 'theme_wp_title', 10, 2 );
 
 /* ============================================================================================================================================= */
@@ -342,9 +344,9 @@
 	if ( function_exists( 'add_theme_support' ) )
 	{
 		add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
-		
+
 		add_theme_support( 'post-thumbnails', array( 'post', 'portfolio', 'gallery' ) );
-		
+
 		add_theme_support( 'automatic-feed-links' );
 	}
 
@@ -365,19 +367,19 @@
 	if ( function_exists( 'add_image_size' ) )
 	{
 		add_image_size( 'featured_image', 150 );
-		
+
 		add_image_size( 'blog_feat_img', 1200 );
-		
+
 		add_image_size( 'portfolio_image_1x', 400 );
 		add_image_size( 'portfolio_image_2x', 800 );
 		add_image_size( 'gallery_image_1x', 400 );
 		add_image_size( 'gallery_image_2x', 800 );
-		
+
 		add_image_size( 'gallery_image_200', 200 );
 		add_image_size( 'gallery_image_400', 400 );
 		add_image_size( 'gallery_image_800', 800 );
 		add_image_size( 'gallery_image_1200', 1200 );
-		
+
 		add_image_size( 'apple_touch_icon_57', 57, 57, true );
 		add_image_size( 'apple_touch_icon_72', 72, 72, true );
 		add_image_size( 'apple_touch_icon_114', 114, 114, true );
@@ -392,8 +394,8 @@
 		register_nav_menus( array(  'top_menu' => __( 'Navigation Menu', 'read' ) ) );
 	}
 	// end register_nav_menus
-	
-	
+
+
 	function wp_page_menu2( $args = array() )
 	{
 		$defaults = array('sort_column' => 'menu_order, post_title', 'menu_class' => 'menu', 'echo' => true, 'link_before' => '', 'link_after' => '');
@@ -412,11 +414,11 @@
 			else
 				$text = $args['show_home'];
 			$class = '';
-			
+
 			if ( is_front_page() && !is_paged() )
 				$class = 'class="current_page_item"';
 			$menu .= '<li ' . $class . '><a href="' . home_url( '/' ) . '" title="' . esc_attr($text) . '">' . $args['link_before'] . $text . $args['link_after'] . '</a></li>';
-			
+
 			// If the front page is a page, add it to the exclude list
 			if ( get_option( 'show_on_front' ) == 'page' )
 			{
@@ -435,13 +437,13 @@
 		$list_args['echo'] = false;
 		$list_args['title_li'] = '';
 		$menu .= str_replace( array( "\r", "\n", "\t" ), '', wp_list_pages($list_args) );
-		
+
 		if ( $menu )
 			$menu = '<ul class="menu-default">' . $menu . '</ul>';
 
 		$menu = $menu . "\n";
 		$menu = apply_filters( 'wp_page_menu', $menu, $args );
-		
+
 		if ( $args['echo'] )
 			echo $menu;
 		else
@@ -455,7 +457,7 @@
 	{
 		return '... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'read' ) . '</a>';
 	}
-	
+
 	add_filter( 'excerpt_more', 'theme_excerpt_more' );
 
 /* ============================================================================================================================================= */
@@ -468,16 +470,16 @@
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Page Sidebar', 'read' ),
 								'id' => 'page_sidebar',
 								'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Header Social Icons', 'read' ),
 								'id' => 'header_sidebar',
 								'description'   => 'Use social media shortcodes with the Text widget in this widget location to add icons to your header.',
@@ -485,40 +487,40 @@
 								'after_widget' => "",
 								'before_title' => '<span style="display: none;">',
 								'after_title' => '</span>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Footer 1', 'read' ),
 								'id' => 'footer_1',
 								'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Footer 2', 'read' ),
 								'id' => 'footer_2',
 								'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Footer 3', 'read' ),
 								'id' => 'footer_3',
 								'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		register_sidebar( array('name' => __( 'Footer 4', 'read' ),
 								'id' => 'footer_4',
 								'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 								'after_widget' => '</aside>',
 								'before_title' => '<h3 class="widget-title">',
 								'after_title' => '</h3>' ) );
-								
-								
+
+
 		$sidebars_with_commas = get_option( 'sidebars_with_commas' );
 
 		if ( $sidebars_with_commas != "" )
@@ -545,7 +547,7 @@
 	function my_meta_box_sidebar()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<div class="admin-inside-box">
 				<input type="hidden" name="my_meta_box_sidebar_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
@@ -557,10 +559,10 @@
 					<select id="my_sidebar" name="my_sidebar" class="widefat">
 						<option <?php if ( $my_sidebar == 'page_sidebar' ) { echo 'selected="selected"'; } ?> value="page_sidebar"><?php echo __( 'Page Sidebar', 'read' ); ?></option>
 						<option <?php if ( $my_sidebar == 'blog_sidebar' ) { echo 'selected="selected"'; } ?> value="blog_sidebar"><?php echo __( 'Blog Sidebar', 'read' ); ?></option>
-						
+
 						<?php
 							$sidebars_with_commas = get_option( 'sidebars_with_commas' );
-							
+
 							if ( $sidebars_with_commas != "" )
 							{
 								$sidebars = preg_split( "/[\s]*[,][\s]*/", $sidebars_with_commas );
@@ -568,12 +570,12 @@
 								foreach ( $sidebars as $sidebar_name )
 								{
 									$selected = "";
-									
+
 									if ( $my_sidebar == $sidebar_name )
 									{
 										$selected = 'selected="selected"';
 									}
-									
+
 									echo '<option ' . $selected . ' value="' . $sidebar_name . '">' . $sidebar_name . '</option>';
 								}
 								// end foreach
@@ -589,25 +591,25 @@
 		<?php
 	}
 	// end my_meta_box_sidebar
-	
+
 	function my_add_meta_box_sidebar()
 	{
 		add_meta_box( 'my_meta_box_sidebar_page', __( 'Sidebar', 'read' ), 'my_meta_box_sidebar', 'page', 'side', 'low' );
 	}
-	
+
 	add_action( 'admin_init', 'my_add_meta_box_sidebar' );
-	
-	
+
+
 	function my_save_meta_box_sidebar( $post_id )
 	{
 		global $post, $post_ID;
-		
+
 		if ( ! wp_verify_nonce( @$_POST['my_meta_box_sidebar_nonce'], basename(__FILE__) ) )
 		{
 			return $post_id;
 		}
-		
-		
+
+
 		if ( $_POST['post_type'] == 'page' )
 		{
 			if ( !current_user_can( 'edit_page', $post_id ) )
@@ -618,18 +620,18 @@
 		else
 		{
 			if ( !current_user_can( 'edit_post', $post_id ) )
-			
+
 			return $post_id;
 		}
-		
-		
+
+
 		if ( $_POST['post_type'] == 'page' )
 		{
 			update_option( $post->ID . 'my_sidebar', $_POST['my_sidebar'] );
 		}
 	}
 	// end my_save_meta_box_sidebar
-	
+
 	add_action( 'save_post', 'my_save_meta_box_sidebar' );
 
 /* ============================================================================================================================================= */
@@ -637,15 +639,15 @@
 	function my_meta_box_hide_post_title()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<div class="admin-inside-box">
 				<input type="hidden" name="my_meta_box_hide_post_title_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-				
+
 				<p>
 					<?php
 						$hide_post_title = get_option( $post->ID . 'hide_post_title', false );
-						
+
 						if ( $hide_post_title )
 						{
 							$hide_post_title_out = 'checked="checked"';
@@ -663,25 +665,25 @@
 		<?php
 	}
 	// end my_meta_box_hide_post_title
-	
+
 	function my_add_meta_box_hide_post_title()
 	{
 		add_meta_box( 'my_meta_box_hide_post_title', __( 'Title Visibility', 'read' ), 'my_meta_box_hide_post_title', 'post', 'side', 'high' );
 	}
-	
+
 	add_action( 'admin_init', 'my_add_meta_box_hide_post_title' );
-	
-	
+
+
 	function my_save_meta_box_hide_post_title( $post_id )
 	{
 		global $post, $post_ID;
-		
+
 		if ( ! wp_verify_nonce( @$_POST['my_meta_box_hide_post_title_nonce'], basename(__FILE__) ) )
 		{
 			return $post_id;
 		}
-		
-		
+
+
 		if ( $_POST['post_type'] == 'post' )
 		{
 			if ( !current_user_can( 'edit_page', $post_id ) )
@@ -692,36 +694,36 @@
 		else
 		{
 			if ( !current_user_can( 'edit_post', $post_id ) )
-			
+
 			return $post_id;
 		}
-		
-		
+
+
 		if ( $_POST['post_type'] == 'post' )
 		{
 			update_option( $post->ID . 'hide_post_title', $_POST['hide_post_title'] );
 		}
 	}
 	// end my_save_meta_box_hide_post_title
-	
+
 	add_action( 'save_post', 'my_save_meta_box_hide_post_title' );
 
 /* ============================================================================================================================================= */
-	
+
 	$theme_seo_fields = get_option( 'theme_seo_fields', 'No' );
-	
-	
+
+
 	function my_meta_box_seo()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<div class="admin-inside-box">
 				<input type="hidden" name="my_meta_box_seo_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-				
+
 				<p>
 					<label for="my_seo_description"><?php echo __( 'Description', 'read' ); ?></label>
-					
+
 					<?php
 						$my_seo_description = stripcslashes( get_option( $post->ID . 'my_seo_description' ) );
 					?>
@@ -729,78 +731,78 @@
 				</p>
 				<p>
 					<label for="my_seo_keywords"><?php echo __( 'Keywords', 'read' ); ?></label>
-					
+
 					<?php
 						$my_seo_keywords = stripcslashes( get_option( $post->ID . 'my_seo_keywords' ) );
 					?>
 					<textarea id="my_seo_keywords" name="my_seo_keywords" rows="4" cols="46" class="widefat"><?php echo $my_seo_keywords; ?></textarea>
 				</p>
-				
+
 				<p class="howto"><?php echo __( 'Separate keywords with commas', 'read' ); ?></p>
 			</div>
 			<!-- end .admin-inside-box -->
 		<?php
 	}
 	// end my_meta_box_seo
-	
-	
+
+
 	function my_add_meta_box_seo()
 	{
 		add_meta_box( 'my_meta_box_seo_post', __( 'SEO', 'read' ), 'my_meta_box_seo', 'post', 'side', 'low' );
 		add_meta_box( 'my_meta_box_seo_page', __( 'SEO', 'read' ), 'my_meta_box_seo', 'page', 'side', 'low' );
-		
+
 		$args = array( '_builtin' => false );
-		$post_types = get_post_types( $args ); 
-		
+		$post_types = get_post_types( $args );
+
 		foreach ( $post_types as $post_type )
 		{
 			add_meta_box( 'my_meta_box_seo_' . $post_type, __( 'SEO', 'read' ), 'my_meta_box_seo', $post_type, 'side', 'low' );
 		}
 	}
 	// end my_add_meta_box_seo
-	
+
 	if ( $theme_seo_fields == 'Yes' )
 	{
 		add_action( 'admin_init', 'my_add_meta_box_seo' );
 	}
-	
-	
+
+
 	function my_save_meta_box_seo( $post_id )
 	{
 		global $post, $post_ID;
-		
+
 		if ( ! wp_verify_nonce( @$_POST['my_meta_box_seo_nonce'], basename(__FILE__) ) )
 		{
 			return $post_id;
 		}
-		
+
 		update_option( $post->ID . 'my_seo_description', $_POST['my_seo_description'] );
 		update_option( $post->ID . 'my_seo_keywords', $_POST['my_seo_keywords'] );
 	}
 	// end my_save_meta_box_seo
-	
+
 	if ( $theme_seo_fields == 'Yes' )
 	{
 		add_action( 'save_post', 'my_save_meta_box_seo' );
 	}
-	
-	
+
+
 	function my_seo_wp_head()
 	{
 		global $post, $post_ID;
-		
-		
+
+
 		if ( is_singular() )
 		{
 			$my_seo_description = stripcslashes( get_option( $post->ID . 'my_seo_description', "" ) );
 			$my_seo_keywords = stripcslashes( get_option( $post->ID . 'my_seo_keywords', "" ) );
-			
-			
+
+
 			if ( $my_seo_description != "" )
 			{
 				echo "\n" . '<meta name="description" content="' . $my_seo_description . '">' . "\n";
 			}
-			
+
 			if ( $my_seo_keywords != "" )
 			{
 				echo '<meta name="keywords" content="' . $my_seo_keywords . '">' . "\n";
@@ -810,13 +812,13 @@
 		{
 			$site_description = stripcslashes( get_option( 'site_description', "" ) );
 			$site_keywords = stripcslashes( get_option( 'site_keywords', "" ) );
-			
-			
+
+
 			if ( $site_description != "" )
 			{
 				echo "\n" . '<meta name="description" content="' . $site_description . '">' . "\n";
 			}
-			
+
 			if ( $site_keywords != "" )
 			{
 				echo '<meta name="keywords" content="' . $site_keywords . '">' . "\n";
@@ -825,18 +827,18 @@
 		// end if
 	}
 	// end my_seo_wp_head
-	
+
 	if ( $theme_seo_fields == 'Yes' )
 	{
 		add_action( 'wp_head', 'my_seo_wp_head' );
 	}
 
 /* ============================================================================================================================================= */
-	
+
 	function og_description_max_charlength( $charlength )
 	{
 		global $post, $post_ID;
-		
+
 		$excerpt = get_post_field( 'post_content', $post_ID );
 		$charlength++;
 
@@ -845,7 +847,7 @@
 			$subex = mb_substr( $excerpt, 0, $charlength - 5 );
 			$exwords = explode( ' ', $subex );
 			$excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
-			
+
 			if ( $excut < 0 )
 			{
 				return mb_substr( $subex, 0, $excut );
@@ -854,7 +856,7 @@
 			{
 				return $subex;
 			}
-			
+
 			return '[...]';
 		}
 		else
@@ -864,18 +866,18 @@
 		// end if
 	}
 	// end og_description_max_charlength
-	
-	
+
+
 	function theme_open_graph_protocol()
 	{
 		global $post, $post_ID;
-		
+
 		if ( is_singular() )
 		{
 			$og_title = get_the_title();
-			
+
 			$og_description = og_description_max_charlength( 140 );
-			
+
 			if ( has_post_thumbnail() )
 			{
 				$og_image_source = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'thumbnail' );
@@ -885,18 +887,18 @@
 			{
 				$og_image = "";
 			}
-			
-			
+
+
 			if ( $og_title != "" )
 			{
 				echo "\n" . '<meta property="og:title" content="' . $og_title . '">' . "\n";
 			}
-			
+
 			if ( $og_image )
 			{
 				echo '<meta property="og:image" content="' . $og_image . '">' . "\n";
 			}
-			
+
 			if ( $og_description != "" )
 			{
 				echo '<meta property="og:description" content="' . $og_title . '">' . "\n\n";
@@ -905,9 +907,9 @@
 		// end if
 	}
 	// end theme_open_graph_protocol
-	
+
 	$theme_og_protocol = get_option( 'theme_og_protocol', 'No' );
-	
+
 	if ( $theme_og_protocol == 'Yes' )
 	{
 		add_action( 'wp_head', 'theme_open_graph_protocol' );
@@ -916,25 +918,25 @@
 /* ============================================================================================================================================= */
 
 	if ( ! function_exists( 'theme_comments' ) ) :
-	
+
 		/*
 		Template for comments and pingbacks.
-		
+
 		To override this walker in a child theme without modifying the comments template simply create your own theme_comments(), and that function will be used instead.
-		
+
 		Used as a callback by wp_list_comments() for displaying the comments.
 		*/
-		
+
 		function theme_comments( $comment, $args, $depth )
 		{
 			$GLOBALS['comment'] = $comment;
-			
+
 			switch ( $comment->comment_type ) :
-			
+
 				case 'pingback' :
-				
+
 				case 'trackback' :
-				
+
 					// Display trackbacks differently than normal comments.
 					?>
 						<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
@@ -945,25 +947,25 @@
 							</p>
 					<?php
 				break;
-				
+
 				default :
-				
+
 					// Proceed with normal comments.
 					global $post;
-					
+
 					?>
-					
+
 					<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
 						<article id="comment-<?php comment_ID(); ?>" class="comment">
 							<header class="comment-meta comment-author vcard">
 								<?php
 									echo get_avatar( $comment, 75 );
-									
+
 									printf( '<cite class="fn">%1$s %2$s</cite>',
 											get_comment_author_link(),
 											// If current post author is also comment author, make it known visually.
 											( $comment->user_id === $post->post_author ) ? '<span></span>' : "" );
-									
+
 									printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
 											esc_url( get_comment_link( $comment->comment_ID ) ),
 											get_comment_time( 'c' ),
@@ -972,7 +974,7 @@
 								?>
 							</header>
 							<!-- end .comment-meta -->
-							
+
 							<?php
 								if ( '0' == $comment->comment_approved ) :
 									?>
@@ -980,18 +982,18 @@
 									<?php
 								endif;
 							?>
-							
+
 							<section class="comment-content comment">
 								<?php
 									comment_text();
 								?>
-								
+
 								<?php
 									edit_comment_link( __( 'Edit', 'read' ), '<p class="edit-link">', '</p>' );
 								?>
 							</section>
 							<!-- end .comment-content -->
-							
+
 							<div class="reply">
 								<?php
 									comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'read' ), 'after' => ' <span>&darr;</span>', 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) );
@@ -1002,7 +1004,7 @@
 						<!-- end #comment-## -->
 					<?php
 				break;
-				
+
 			endswitch;
 		}
 		// end theme_comments
@@ -1025,7 +1027,7 @@
 						'not_found_in_trash' => __( 'No Items found in Trash', 'read' ),
 						'parent_item_colon' => '',
 						'menu_name' => 'Portfolio' );
-		
+
 		$args = array(  'labels' => $labels,
 						'public' => true,
 						'exclude_from_search' => false,
@@ -1038,18 +1040,18 @@
 						'menu_position' => 5,
 						'supports' => array( 'title', 'editor', 'thumbnail', 'comments', 'revisions' ),
 						'rewrite' => array( 'slug' => 'portfolio', 'with_front' => false ));
-					
+
 		register_post_type( 'portfolio' , $args );
 	}
 	// end create_post_type_portfolio
-	
+
 	add_action( 'init', 'create_post_type_portfolio' );
-	
-	
+
+
 	function portfolio_updated_messages( $messages )
 	{
 		global $post, $post_ID;
-		
+
 		$messages['portfolio'] = array( 0 => "", // Unused. Messages start at index 1.
 										1 => sprintf( __( '<strong>Updated.</strong> <a target="_blank" href="%s">View</a>', 'read' ), esc_url( get_permalink( $post_ID) ) ),
 										2 => __( 'Custom field updated.', 'read' ),
@@ -1064,14 +1066,14 @@
 										// translators: Publish box date format, see http://php.net/date
 										date_i18n( __( 'M j, Y @ G:i', 'read' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID) ) ),
 										10 => sprintf( __( '<strong>Item draft updated.</strong> <a target="_blank" href="%s">Preview</a>', 'read' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID) ) ) ) );
-	
+
 		return $messages;
 	}
 	// end portfolio_updated_messages
-	
+
 	add_filter( 'post_updated_messages', 'portfolio_updated_messages' );
-	
-	
+
+
 	function portfolio_columns( $pf_columns )
 	{
 		$pf_columns = array('cb' => '<input type="checkbox">',
@@ -1082,60 +1084,60 @@
 							'portfolio_type' => __( 'Type', 'read' ),
 							'comments' => '<span class="vers"><div title="Comments" class="comment-grey-bubble"></div></span>',
 							'date' => __( 'Date', 'read' ) );
-		
+
 		return $pf_columns;
 	}
 	// end portfolio_columns
-	
+
 	add_filter( 'manage_edit-portfolio_columns', 'portfolio_columns' );
-	
-	
+
+
 	function portfolio_custom_columns( $pf_column )
 	{
 		global $post, $post_ID;
-		
+
 		switch ( $pf_column )
 		{
 			case 'pf_featured_image':
-			
+
 				if ( has_post_thumbnail() )
 				{
 					the_post_thumbnail( 'featured_image' );
 				}
-				
+
 			break;
-			
+
 			case 'departments':
-			
+
 				$taxon = 'department';
 				$terms_list = get_the_terms( $post_ID, $taxon );
-				
+
 				if ( ! empty( $terms_list ) )
 				{
 					$out = array();
-					
+
 					foreach ( $terms_list as $term_list )
 					{
 						$out[] = '<a href="edit.php?post_type=portfolio&department=' .$term_list->slug .'">' .$term_list->name .' </a>';
 					}
-					
+
 					echo join( ', ', $out );
 				}
-				
+
 			break;
-			
+
 			case 'pf_short_description':
-			
+
 				$pf_short_description = stripcslashes( get_option( $post->ID . 'pf_short_description', "" ) );
-				
+
 				echo $pf_short_description;
-				
+
 			break;
-			
+
 			case 'portfolio_type':
-			
+
 				$pf_type = get_option( $post->ID . 'pf_type', 'Standard' );
-				
+
 				if ( $pf_type == 'Lightbox Image' )
 				{
 					echo 'Lightbox Gallery';
@@ -1144,16 +1146,16 @@
 				{
 					echo $pf_type;
 				}
-				
+
 			break;
 		}
 		// end switch
 	}
 	// end portfolio_custom_columns
-	
+
 	add_action( 'manage_posts_custom_column',  'portfolio_custom_columns' );
-	
-	
+
+
 	function portfolio_taxonomy()
 	{
 		$labels_dep = array('name' => __( 'Departments', 'read' ),
@@ -1176,8 +1178,8 @@
 							'public' => true,
 							'query_var' => true,
 							'rewrite' => array( 'slug' => 'department' ) ) );
-							
-							
+
+
 		$labels_tag = array('name' => __( 'Portfolio Tags', 'read' ),
 							'singular_name' => __( 'Portfolio Tag', 'read' ),
 							'search_items' =>  __( 'Search', 'read' ),
@@ -1200,32 +1202,32 @@
 							'rewrite' => array( 'slug' => 'portfolio_tags' ) ) );
 	}
 	// end portfolio_taxonomy
-	
+
 	add_action( 'init', 'portfolio_taxonomy' );
-	
-	
+
+
 	function only_show_departments()
 	{
 		global $typenow;
-		
+
 		if ( $typenow == 'portfolio' )
 		{
 			$filters = array( 'department' );
-			
+
 			foreach ( $filters as $tax_slug )
 			{
 				$tax_obj = get_taxonomy( $tax_slug );
 				$tax_name = $tax_obj->labels->name;
 				$terms = get_terms( $tax_slug );
-			
+
 				echo '<select name="' .$tax_slug .'" id="' .$tax_slug .'" class="postform">';
 				echo '<option value="">' . __( 'Show All', 'read' ) . ' ' .$tax_name .'</option>';
-				
+
 				foreach ( $terms as $term )
 				{
 					echo '<option value='. $term->slug, @$_GET[$tax_slug] == $term->slug ? ' selected="selected"' : '','>' . $term->name .' (' . $term->count .')</option>';
 				}
-				
+
 				echo '</select>';
 			}
 			// end foreach
@@ -1235,19 +1237,19 @@
 	// end only_show_departments
 
 	add_action( 'restrict_manage_posts', 'only_show_departments' );
-	
-	
+
+
 	function portfolio_metabox()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<p>
 				<input type="hidden" name="portfolio_nonce" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 			</p>
-			
+
 			<h4><?php echo __( 'Type', 'read' ); ?></h4>
-			
+
 			<p class="pf-type-wrap">
 				<?php
 					$pf_type = get_option( $post->ID . 'pf_type', 'Standard' );
@@ -1276,7 +1278,7 @@
 					<input type="radio" name="pf_type" <?php if ( $pf_type == 'Direct URL' ) { echo 'checked="checked"'; } ?> class="pf-type-direct-url" value="Direct URL"> <?php echo __( 'Direct URL', 'read' ); ?>
 				</label>
 			</p>
-			
+
 			<p class="direct-url-wrap" style="<?php if ( $pf_type == 'Direct URL' ) { echo 'display: block;'; } else { echo 'display: none;'; } ?>">
 				<?php
 					$pf_direct_url = stripcslashes( get_option( $post->ID . 'pf_direct_url' ) );
@@ -1286,7 +1288,7 @@
 				<input type="text" id="pf_direct_url" name="pf_direct_url" class="widefat code2" placeholder="Link Url" value="<?php echo $pf_direct_url; ?>">
 				<label style="display: inline-block; margin-top: 5px;"><input type="checkbox" id="pf_link_new_tab" name="pf_link_new_tab" <?php if ( $pf_link_new_tab ) { echo 'checked="checked"'; } ?>> <?php echo __( 'Open link in new tab', 'read' ); ?></label>
 			</p>
-			
+
 			<script>
 				jQuery(document).ready(function($)
 				{
@@ -1303,11 +1305,11 @@
 					});
 				});
 			</script>
-			
+
 			<hr>
-			
+
 			<h4><?php echo __( 'Thumbnail Size', 'read' ); ?></h4>
-			
+
 			<p>
 				<?php
 					$pf_thumb_size = get_option( $post->ID . 'pf_thumb_size', 'x1' );
@@ -1316,11 +1318,11 @@
 				<br>
 				<label style="display: inline-block; margin-bottom: 5px;"><input type="radio" name="pf_thumb_size" <?php if ( $pf_thumb_size == 'x2' ) { echo 'checked="checked"'; } ?> value="x2"> <?php echo __( '2x', 'read' ); ?></label>
 			</p>
-			
+
 			<hr>
-			
+
 			<h4><?php echo __( 'Short Description', 'read' ); ?></h4>
-			
+
 			<p>
 				<?php
 					$pf_short_description = stripcslashes( get_option( $post->ID . 'pf_short_description' ) );
@@ -1330,27 +1332,27 @@
 		<?php
 	}
 	// end portfolio_metabox
-	
-	
+
+
 	function add_portfolio_metabox()
 	{
 		add_meta_box( 'portfolio_metabox', __( 'Details', 'read' ), 'portfolio_metabox', 'portfolio', 'side', 'low' );
 	}
 	// end add_portfolio_metabox
-	
+
 	add_action( 'admin_init', 'add_portfolio_metabox' );
-	
-	
+
+
 	function save_portfolio_details( $post_id )
 	{
 		global $post, $post_ID;
-	
+
 		if ( ! wp_verify_nonce( @$_POST['portfolio_nonce'], basename(__FILE__) ) )
 		{
 			return $post_id;
 		}
 
-		
+
 		if ( $_POST['post_type'] == 'portfolio' )
 		{
 			if ( ! current_user_can( 'edit_page', $post_id ) )
@@ -1365,8 +1367,8 @@
 				return $post_id;
 			}
 		}
-		
-	
+
+
 		if ( $_POST['post_type'] == 'portfolio' )
 		{
 			update_option( $post->ID . 'pf_type', $_POST['pf_type'] );
@@ -1378,7 +1380,7 @@
 		// end if
 	}
 	// end save_portfolio_details
-	
+
 	add_action( 'save_post', 'save_portfolio_details' );
 
 /* ============================================================================================================================================= */
@@ -1398,7 +1400,7 @@
 						'not_found_in_trash' => __( 'No Items found in Trash', 'read' ),
 						'parent_item_colon' => "",
 						'menu_name' => 'Gallery' );
-		
+
 		$args = array(  'labels' => $labels,
 						'public' => true,
 						'exclude_from_search' => false,
@@ -1411,18 +1413,18 @@
 						'menu_position' => 5,
 						'supports' => array( 'title', 'editor', 'thumbnail', 'comments', 'revisions' ),
 						'rewrite' => array( 'slug' => 'gallery', 'with_front' => false ));
-					
+
 		register_post_type( 'gallery' , $args );
 	}
 	// end create_post_type_gallery
-	
+
 	add_action( 'init', 'create_post_type_gallery' );
-	
-	
+
+
 	function updated_messages_gallery( $messages )
 	{
 		global $post, $post_ID;
-		
+
 		$messages['gallery'] = array( 0 => "", // Unused. Messages start at index 1.
 										1 => sprintf( __( '<strong>Updated.</strong> <a target="_blank" href="%s">View</a>', 'read' ), esc_url( get_permalink( $post_ID) ) ),
 										2 => __( 'Custom field updated.', 'read' ),
@@ -1437,14 +1439,14 @@
 										// translators: Publish box date format, see http://php.net/date
 										date_i18n( __( 'M j, Y @ G:i', 'read' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID) ) ),
 										10 => sprintf( __( '<strong>Item draft updated.</strong> <a target="_blank" href="%s">Preview</a>', 'read' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID) ) ) ) );
-	
+
 		return $messages;
 	}
 	// end updated_messages_gallery
-	
+
 	add_filter( 'post_updated_messages', 'updated_messages_gallery' );
-	
-	
+
+
 	function gallery_columns( $gl_columns )
 	{
 		$gl_columns = array('cb' => '<input type="checkbox">',
@@ -1454,44 +1456,44 @@
 							'author' => __( 'Author', 'read' ),
 							'comments' => '<span class="vers"><div title="Comments" class="comment-grey-bubble"></div></span>',
 							'date' => __( 'Date', 'read' ) );
-		
+
 		return $gl_columns;
 	}
 	// end gallery_columns
-	
+
 	add_filter( 'manage_edit-gallery_columns', 'gallery_columns' );
-	
-	
+
+
 	function gallery_custom_columns( $gl_column )
 	{
 		global $post, $post_ID;
-		
+
 		switch ( $gl_column )
 		{
 			case 'gl_featured_image':
-			
+
 				if ( has_post_thumbnail() )
 				{
 					the_post_thumbnail( 'featured_image' );
 				}
-				
+
 			break;
-			
+
 			case 'gl_short_description':
-			
+
 				$gl_short_description = stripcslashes( get_option( $post->ID . 'gl_short_description' ) );
-				
+
 				echo $gl_short_description;
-				
+
 			break;
 		}
 		// end switch
 	}
 	// end gallery_custom_columns
-	
+
 	add_action( 'manage_posts_custom_column',  'gallery_custom_columns' );
-	
-	
+
+
 	function taxonomy_gallery()
 	{
 		$labels_tag = array('name' => __( 'Gallery Tags', 'read' ),
@@ -1516,34 +1518,34 @@
 							'rewrite' => array( 'slug' => 'gallery_tags' ) ) );
 	}
 	// end taxonomy_gallery
-	
+
 	add_action( 'init', 'taxonomy_gallery' );
-	
-	
+
+
 	function my_meta_box_gallery_details()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<p>
 				<input type="hidden" name="nonce_gallery" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
 			</p>
-			
+
 			<h4><?php echo __( 'Thumbnail Size', 'read' ); ?></h4>
 			<p>
 				<?php
 					$gl_thumb_size = get_option( $post->ID . 'gl_thumb_size', 'x1' );
 				?>
-				
+
 				<label style="display: inline-block; margin-bottom: 5px;"><input type="radio" name="gl_thumb_size" <?php if ( $gl_thumb_size == 'x1' ) { echo 'checked="checked"'; } ?> value="x1"> <?php echo __( '1x', 'read' ); ?></label>
-				
+
 				<br>
-				
+
 				<label style="display: inline-block; margin-bottom: 5px;"><input type="radio" name="gl_thumb_size" <?php if ( $gl_thumb_size == 'x2' ) { echo 'checked="checked"'; } ?> value="x2"> <?php echo __( '2x', 'read' ); ?></label>
 			</p>
-			
+
 			<hr>
-			
+
 			<h4><?php echo __( 'Short Description', 'read' ); ?></h4>
 			<p>
 				<?php
@@ -1554,33 +1556,33 @@
 		<?php
 	}
 	// end my_meta_box_gallery_details
-	
-	
+
+
 	function my_meta_box_gallery_images()
 	{
 		global $post, $post_ID;
-		
+
 		?>
 			<p>
 				<input type="hidden" name="nonce_gallery" value="<?php echo wp_create_nonce( basename(__FILE__) ); ?>">
-			</p>				
+			</p>
 			<?php
 				$gl_images_count =  get_option( $post->ID . 'gl_images_count', '0' );
-				
+
 				for ( $i = 0; $i < $gl_images_count; $i++ )
 				{
 					$gl_image = stripcslashes( get_option( $post->ID . 'gl_image' . $i, "" ) );
-					
+
 					if ( $gl_image != "" )
 					{
 						$gl_image_title = stripcslashes( get_option( $post->ID . 'gl_image_title' . $i, "" ) );
-						
+
 						global $wpdb;
-						
+
 						$attachment_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE guid = '$gl_image'" );
-						
+
 						$image_attributes = wp_get_attachment_image_src( $attachment_id, 'featured_image' );
-						
+
 						?>
 							<p style="float: left; margin-right: 10px;">
 								<img style="display: block; max-width: 150px; margin-bottom: 10px;" alt="" src="<?php echo $image_attributes[0]; ?>">
@@ -1602,7 +1604,7 @@
 				<input type="hidden" id="gl_images_count" name="gl_images_count" value="<?php echo $gl_images_count; ?>">
 			</p>
 			<script>
-			
+
 				jQuery(document).ready(function($)
 				{
 					// image upload
@@ -1617,46 +1619,46 @@
 							uploadID.trigger( 'change' );
 							tb_remove();
 						}
-						
+
 						uploadID = jQuery(this).prev( 'input' );
 						formfield = jQuery( '.upload' ).attr( 'name' );
-						
+
 						tb_show('', 'media-upload.php?post_id=0&amp;type=image&amp;TB_iframe=true');
 						return false;
 					});
 					// end image upload
-					
-					
+
+
 					// add new image
 					$( '#gallery-add-new-image' ).click( function()
 					{
 						var str = '<p><input type="text" name="gl_image_title[]" placeholder="Image Title" value=""><input type="text" name="gl_image[]" class="upload code2" style="width: 50%;" placeholder="Image Url" value=""><input type="button" class="button upload-button" value="Browse"></p>';
-						
+
 						$( '.app' ).append( str );
-						
+
 						var gl_images_count = $( '#gl_images_count' ).val();
-						
+
 						gl_images_count++;
-						
+
 						$( '#gl_images_count' ).val( gl_images_count );
-						
+
 						return false;
 					});
 					// end add new image
-					
-					
+
+
 					// remove image
 					$( '.gallery-remove-image' ).click( function()
 					{
 						$( this ).parent( 'p' ).find( 'input.upload' ).val( "" );
-						
+
 						$( this ).parent( 'p' ).hide( 'slow' );
-						
+
 						return false;
 					});
 					// end remove image
-					
-					
+
+
 					// change image
 					function addImageChange()
 					{
@@ -1664,58 +1666,58 @@
 					    {
 							$( this ).prev( 'img' ).attr( 'src', $( this ).val() );
 					    });
-					} 
-					
+					}
+
 					addImageChange();
 					// end change image
-					
+
 				});
-				
+
 			</script>
 		<?php
 	}
 	// end my_meta_box_gallery_images
-	
-	
+
+
 	function my_add_meta_box_gallery()
 	{
 		add_meta_box( 'my_meta_box_gallery_details', __( 'Details', 'read' ), 'my_meta_box_gallery_details', 'gallery', 'side', 'low' );
-		
+
 		add_meta_box( 'my_meta_box_gallery_images', __( 'Images', 'read' ), 'my_meta_box_gallery_images', 'gallery' );
 	}
 	// end my_add_meta_box_gallery
-	
+
 	add_action( 'admin_init', 'my_add_meta_box_gallery' );
-	
-	
+
+
 	function my_save_meta_box_gallery( $post_id )
 	{
 		global $post, $post_ID;
-		
+
 		if ( ! wp_verify_nonce( @$_POST['nonce_gallery'], basename(__FILE__) ) )
 		{
 			return $post_id;
 		}
-		
-		
+
+
 		if ( $_POST['post_type'] == 'gallery' )
 		{
 			update_option( $post->ID . 'gl_thumb_size', $_POST['gl_thumb_size'] );
 			update_option( $post->ID . 'gl_short_description', $_POST['gl_short_description'] );
-			
+
 			$gl_images_count = $_POST['gl_images_count'];
-			
+
 			for ( $i = 0; $i < $gl_images_count; $i++ )
 			{
 				update_option( $post->ID . 'gl_image' . $i , $_POST['gl_image'][$i] );
 				update_option( $post->ID . 'gl_image_title' . $i , esc_attr( $_POST['gl_image_title'][$i] ) );
 			}
-			
+
 			update_option( $post->ID . 'gl_images_count' , $gl_images_count );
 		}
 	}
 	// end my_save_meta_box_gallery
-	
+
 	add_action( 'save_post', 'my_save_meta_box_gallery' );
 
 /* ============================================================================================================================================= */
@@ -1723,53 +1725,53 @@
 
 	// https://github.com/franz-josef-kaiser/Easy-Pagination-Deamon
 	// https://github.com/marke123/Easy-Pagination-Deamon
-	
-	if ( ! class_exists('WP') ) 
+
+	if ( ! class_exists('WP') )
 	{
 		header( 'Status: 403 Forbidden' );
 		header( 'HTTP/1.1 403 Forbidden' );
 		exit;
 	}
-	
+
 	/**
 	 * TEMPLATE TAG
-	 * 
+	 *
 	 * A wrapper/template tag for the pagination builder inside the class.
-	 * Write a call for this function with a "range" 
+	 * Write a call for this function with a "range"
 	 * inside your template to display the pagination.
-	 * 
+	 *
 	 * @param integer $range
 	 */
-	
-	function oxo_pagination( $args ) 
+
+	function oxo_pagination( $args )
 	{
 		return new oxoPagination( $args );
 	}
-	
-	
-	if ( ! class_exists( 'oxoPagination' ) ) 
+
+
+	if ( ! class_exists( 'oxoPagination' ) )
 	{
-		class oxoPagination 
+		class oxoPagination
 		{
 			/**
 			 * Plugin root path
 			 * @var unknown_type
 			 */
 			protected $path;
-			
+
 			/**
 			 * Plugin version
 			 * @var integer
 			 */
 			protected $version;
-			
+
 			/**
 			 * Default arguments
 			 * @var array
 			 */
 			protected $defaults = array( 'classes'			=> ""
 										,'range'			=> 5
-										,'wrapper'			=> 'li' // element in which we wrap the link 
+										,'wrapper'			=> 'li' // element in which we wrap the link
 										,'highlight'		=> 'current' // class for the current page
 										,'before'			=> ""
 										,'after'			=> ""
@@ -1788,14 +1790,14 @@
 			 * @var array
 			 */
 			protected $args;
-			
+
 			/**
 			 * Constant for the texdomain (i18n)
 			 */
 			const LANG = 'read';
-			
-			
-			public function __construct( $args ) 
+
+
+			public function __construct( $args )
 			{
 				// Set root path variable
 				$this->path = $this->get_root_path();
@@ -1829,7 +1831,7 @@
 			/**
 			 * Plugin root
 			 */
-			function get_root_path() 
+			function get_root_path()
 			{
 				$path = trailingslashit( WP_PLUGIN_URL.'/'.str_replace( basename( __FILE__ ), "", plugin_basename( __FILE__ ) ) );
 				$path = apply_filters( 'config_pagination_url', $path );
@@ -1840,15 +1842,15 @@
 
 			/**
 			 * Return plugin comment data
-			 * 
+			 *
 			 * @since 0.1.3.3
-			 * 
+			 *
 			 * @param $value string | default = 'Version' (Other input values: Name, PluginURI, Version, Description, Author, AuthorURI, TextDomain, DomainPath, Network, Title)
-			 * 
+			 *
 			 * @return string
 			 */
 			private function get_plugin_data( $value = 'Version' )
-			{	
+			{
 				$plugin_data = get_plugin_data( __FILE__ );
 
 				return $plugin_data[ $value ];
@@ -1857,7 +1859,7 @@
 			/**
 			 * Register styles
 			 */
-			function register_styles() 
+			function register_styles()
 			{
 				if ( ! is_admin() )
 				{
@@ -1876,14 +1878,14 @@
 					{
 						$file = $this->path.$name;
 					}
-					else 
+					else
 					{
 						return;
 					}
 
 					// try to avoid caching stylesheets if they changed
 					$version = filemtime( $file );
-					
+
 					// If no change was found, use the plugins version number
 					if ( ! $version )
 						$version = $this->version;
@@ -1895,7 +1897,7 @@
 			/**
 			 * Print styles
 			 */
-			function print_styles() 
+			function print_styles()
 			{
 				if ( ! is_admin() )
 				{
@@ -1906,7 +1908,7 @@
 			/**
 			 * Help with placing the template tag right
 			 */
-			function help() 
+			function help()
 			{
 				/*
 				if ( is_single() && ! in_the_loop() )
@@ -1926,31 +1928,31 @@
 					return;
 
 				// error
-				$message = new WP_Error( 
+				$message = new WP_Error(
 					 __CLASS__
-					,$output 
+					,$output
 				);
 
 				// render
-				if ( is_wp_error( $message ) ) 
-				{ 
+				if ( is_wp_error( $message ) )
+				{
 				?>
 					<div id="oxo-error-<?php echo $message->get_error_code(); ?>" class="error oxo-error prepend-top clear">
 						<strong>
 							<?php echo $message->get_error_message(); ?>
 						</strong>
 					</div>
-				<?php 
+				<?php
 				}
 			}
 
 
 			/**
 			 * Replacement for the native wp_link_page() function
-			 * 
+			 *
 			 * @author original version: Thomas Scholz (toscho.de)
 			 * @link http://wordpress.stackexchange.com/questions/14406/how-to-style-current-page-number-wp-link-pages/14460#14460
-			 * 
+			 *
 			 * @param (mixed) array $args
 			 */
 			public function page_links( $args )
@@ -1971,16 +1973,16 @@
 				# <<<< css classes wrapper
 
 				$output  = $before;
-				
-				switch ( $next_or_number ) 
+
+				switch ( $next_or_number )
 				{
 					case 'next' :
-					
-						if ( $more ) 
+
+						if ( $more )
 						{
 							# >>>> [prev]
 							$i = $page - 1;
-							if ( $i && $more ) 
+							if ( $i && $more )
 							{
 								# >>>> <li class="custom-class">
 								$output .= '<'.$wrapper.$start_classes.$classes.$end_classes.'>';
@@ -1992,7 +1994,7 @@
 
 							# >>>> [next]
 							$i = $page + 1;
-							if ( $i <= $numpages && $more ) 
+							if ( $i <= $numpages && $more )
 							{
 								# >>>> <li class="custom-class">
 								$output .= '<'.$wrapper.$start_classes.$classes.$end_classes.'>';
@@ -2002,15 +2004,15 @@
 							}
 							# <<<< [next]
 						}
-						
+
 						break;
 
 					case 'number' :
-					
+
 						for ( $i = 1; $i < ( $numpages + 1 ); $i++ )
 						{
 							$classes = isset( $this->args['classes'] ) ? $this->args['classes'] : '';
-							
+
 							if ( $page === $i && isset( $this->args['highlight'] ) )
 								 $classes .= ' '.$this->args['highlight'];
 
@@ -2035,16 +2037,16 @@
 							$output .= '</'.$wrapper.'>';
 							# <<<< </li>
 						}
-						
+
 						break;
 
 					default :
-					
+
 						// in case you can imagine some funky way to paginate
 						do_action( 'hook_pagination_next_or_number', $page_links, $classes );
 						break;
 				}
-				
+
 				$output .= $after;
 
 				return $output;
@@ -2053,7 +2055,7 @@
 
 			/**
 			 * Navigation for image attachments
-			 * 
+			 *
 			 * @param unknown_type $args
 			 */
 			public function attachment_links( $args )
@@ -2065,13 +2067,13 @@
 
 				# ============================================== #
 
-				$attachments = array_values( get_children( array( 
+				$attachments = array_values( get_children( array(
 					 'post_parent'		=> $post->post_parent
 					,'post_status'		=> 'inherit'
 					,'post_type'		=> 'attachment'
 					,'post_mime_type'	=> 'image'
 					,'order'			=> 'ASC'
-					,'orderby'			=> 'menu_order ID' 
+					,'orderby'			=> 'menu_order ID'
 				) ) );
 
 				// setup the keys for our links
@@ -2142,19 +2144,19 @@
 
 			/**
 			 * Wordpress pagination for archives/search/etc.
-			 * 
+			 *
 			 * Semantically correct pagination inside an unordered list
-			 * 
+			 *
 			 * Displays: [First] [<<] [1] [2] [3] [4] [>>] [Last]
 			 *	+ First/Last only appears if not on first/last page
 			 *	+ Shows next/previous links [<<]/[>>]
-			 * 
+			 *
 			 * Accepts a range attribute (default = 5) to adjust the number
 			 * of direct page links that link to the pages above/below the current one.
-			 * 
+			 *
 			 * @param (integer) $range
 			 */
-			function render( $args = array( 'classes', 'range' ) ) 
+			function render( $args = array( 'classes', 'range' ) )
 			{
 				// $paged - number of the current page
 				global $wp_query, $paged, $numpages;
@@ -2175,17 +2177,17 @@
 
 				<ul class="pagination">
 
-					<?php 
+					<?php
 					// *******************************************************
 					// To the first / previous page
 					// On the first page, don't put the first / prev page link
 					// *******************************************************
-					if ( $paged !== (int) 1 && $paged !== (int) 0 && ! is_page() ) 
+					if ( $paged !== (int) 1 && $paged !== (int) 0 && ! is_page() )
 					{
 						?>
 						<li class="pagination-first <?php echo $classes; ?>">
 							<?php
-							$first_post_link = get_pagenum_link( 1 ); 
+							$first_post_link = get_pagenum_link( 1 );
 							?>
 							<a href=<?php echo $first_post_link; ?> rel="first">
 								<?php _e( 'First', 'read' ); ?>
@@ -2193,7 +2195,7 @@
 						</li>
 
 						<li class="pagination-prev <?php echo $classes; ?>">
-							<?php 
+							<?php
 								# let's use the native fn instead of the previous_/next_posts_link() alias
 								# get_adjacent_post( $in_same_cat = false, $excluded_categories = '', $previous = true )
 
@@ -2213,7 +2215,7 @@
 										# $prev_post_title	= __( 'Prev', self::LANG ).': '.mb_substr( $prev_post_obj->post_title, 0, 6 );
 									}
 								}
-								else 
+								else
 								{
 									$prev_post_link		= home_url().'/?s='.get_search_query().'&paged='.( $paged-1 );
 									$prev_post_title	= '&laquo;'; // equals "ۢ
@@ -2225,7 +2227,7 @@
 							</a>
 							<?php # previous_posts_link(' &laquo; '); // ˠ?>
 						</li>
-						<?php 
+						<?php
 					}
 
 					// Render, as long as there are more posts found, than we display per page
@@ -2235,13 +2237,13 @@
 						// *******************************************************
 						// We need the sliding effect only if there are more pages than is the sliding range
 						// *******************************************************
-						if ( $max_page > $range ) 
+						if ( $max_page > $range )
 						{
 							// When closer to the beginning
-							if ( $paged < $range ) 
+							if ( $paged < $range )
 							{
-								for ( $i = 1; $i <= ( $range+1 ); $i++ ) 
-								{ 
+								for ( $i = 1; $i <= ( $range+1 ); $i++ )
+								{
 									$current = '';
 									// Apply the css class "current" if it's the current post
 									if ( $paged === (int) $i )
@@ -2256,32 +2258,13 @@
 											<?php echo $i; ?>
 										</a>
 									</li>
-									<?php 
+									<?php
 								}
 							}
 							// When closer to the end
-							elseif ( $paged >= ( $max_page - ceil ( $range/2 ) ) ) 
+							elseif ( $paged >= ( $max_page - ceil ( $range/2 ) ) )
 							{
 								for ( $i = $max_page - $range; $i <= $max_page; $i++ )
-								{ 
-									$current = '';
-									// Apply the css class "current" if it's the current post
-									$current = ( $paged === (int) $i ) ? ' current' : '';
-
-									?>
-									<li class="pagination-num<?php echo $classes.$current; ?>">
-										<!-- Render page number Link -->
-										<a href="<?php echo get_pagenum_link( $i ); ?>">
-											<?php echo $i; ?>
-										</a>
-									</li>
-									<?php 
-								}
-							}
-							// Somewhere in the middle
-							elseif ( $paged >= $range && $paged < ( $max_page - ceil( $range/2 ) ) ) 
-							{
-								for ( $i = ( $paged - ceil( $range/2 ) ); $i <= ( $paged + ceil( $range/2 ) ); $i++ ) 
 								{
 									$current = '';
 									// Apply the css class "current" if it's the current post
@@ -2294,14 +2277,33 @@
 											<?php echo $i; ?>
 										</a>
 									</li>
-									<?php 
+									<?php
+								}
+							}
+							// Somewhere in the middle
+							elseif ( $paged >= $range && $paged < ( $max_page - ceil( $range/2 ) ) )
+							{
+								for ( $i = ( $paged - ceil( $range/2 ) ); $i <= ( $paged + ceil( $range/2 ) ); $i++ )
+								{
+									$current = '';
+									// Apply the css class "current" if it's the current post
+									$current = ( $paged === (int) $i ) ? ' current' : '';
+
+									?>
+									<li class="pagination-num<?php echo $classes.$current; ?>">
+										<!-- Render page number Link -->
+										<a href="<?php echo get_pagenum_link( $i ); ?>">
+											<?php echo $i; ?>
+										</a>
+									</li>
+									<?php
 								}
 							}
 						}
 						// Less pages than the range, no sliding effect needed
-						else 
+						else
 						{
-							for ( $i = 1; $i <= $max_page; $i++ ) 
+							for ( $i = 1; $i <= $max_page; $i++ )
 							{
 								$current = '';
 								// Apply the css class "current" if it's the current post
@@ -2314,10 +2316,10 @@
 										<?php echo $i; ?>
 									</a>
 								</li>
-								<?php 
+								<?php
 							}
 						} // endif;
-					} // endif; there are more posts found, than we display per page 
+					} // endif; there are more posts found, than we display per page
 
 
 					// *******************************************************
@@ -2329,7 +2331,7 @@
 						$echo = false;
 
 						if ( wp_attachment_is_image() === true )
-						{ 
+						{
 							echo $this->attachment_links( $this->args );
 						}
 						elseif ( $numpages > 1 )
@@ -2347,7 +2349,7 @@
 					{
 						?>
 						<li class="pagination-next<?php echo $classes; ?>">
-							<?php 
+							<?php
 							# let's use the native fn instead of the previous_/next_posts_link() alias
 							# get_adjacent_post( $in_same_cat = false, $excluded_categories = '', $previous = true )
 
@@ -2369,7 +2371,7 @@
 									# $next_post_title	= __( 'Next', self::LANG ).mb_substr( $next_post_obj->post_title, 0, 6 );
 								}
 							}
-							else 
+							else
 							{
 								$next_post_link		= home_url().'/?s='.get_search_query().'&paged='.( $paged+1 );
 								$next_post_title	= '&raquo;'; // equals "ۢ
@@ -2383,8 +2385,8 @@
 									<?php echo $next_post_title; ?>
 								</a>
 								<?php
-							} 
-							else 
+							}
+							else
 							{
 								next_posts_link(' &raquo; '); // ۊ
 							}
@@ -2393,14 +2395,14 @@
 
 						<li class="pagination-last<?php echo $classes; ?>">
 							<?php
-							$last_post_link = get_pagenum_link( $max_page ); 
+							$last_post_link = get_pagenum_link( $max_page );
 							?>
 							<!-- Render Link to the last post -->
 							<a href="<?php echo $last_post_link; ?>" rel="last">
 								<?php _e( 'Last', 'read' ); ?>
 							</a>
 						</li>
-						<?php 
+						<?php
 					}
 					// endif;
 				?>
@@ -2416,9 +2418,9 @@
 /* ============================================================================================================================================= */
 
 	/**
-	 * This function filters the post content when viewing a post with the "chat" post format.  It formats the 
-	 * content with structured HTML markup to make it easy for theme developers to style chat posts.  The 
-	 * advantage of this solution is that it allows for more than two speakers (like most solutions).  You can 
+	 * This function filters the post content when viewing a post with the "chat" post format.  It formats the
+	 * content with structured HTML markup to make it easy for theme developers to style chat posts.  The
+	 * advantage of this solution is that it allows for more than two speakers (like most solutions).  You can
 	 * have 100s of speakers in your chat post, each with their own, unique classes for styling.
 	 *
 	 * @author David Chandra
@@ -2520,10 +2522,10 @@
 	// end my_format_chat_content
 
 	/**
-	 * This function returns an ID based on the provided chat author name.  It keeps these IDs in a global 
+	 * This function returns an ID based on the provided chat author name.  It keeps these IDs in a global
 	 * array and makes sure we have a unique set of IDs.  The purpose of this function is to provide an "ID"
-	 * that will be used in an HTML class for individual chat rows so they can be styled.  So, speaker "John" 
-	 * will always have the same class each time he speaks.  And, speaker "Mary" will have a different class 
+	 * that will be used in an HTML class for individual chat rows so they can be styled.  So, speaker "John"
+	 * will always have the same class each time he speaks.  And, speaker "Mary" will have a different class
 	 * from "John" but will have the same class each time she speaks.
 	 *
 	 * @author David Chandra
@@ -2538,8 +2540,8 @@
 	 * @param string $chat_author Author of the current chat row.
 	 * @return int The ID for the chat row based on the author.
 	 */
-	
-	
+
+
 	function my_format_chat_row_id( $chat_author )
 	{
 		global $_post_format_chat_ids;
@@ -2557,7 +2559,7 @@
 		return absint( array_search( $chat_author, $_post_format_chat_ids ) ) + 1;
 	}
 	// end my_format_chat_row_id
-	
+
 	/* Filter the content of chat posts. */
 	add_filter( 'the_content', 'my_format_chat_content' );
 
@@ -2575,11 +2577,11 @@
 	function my_run_shortcode( $content )
 	{
 		global $shortcode_tags;
-		
+
 		// Backup current registered shortcodes and clear them all out
 		$orig_shortcode_tags = $shortcode_tags;
 		remove_all_shortcodes();
-		
+
 		add_shortcode( 'tabs', 'tabs' );
 		add_shortcode( 'tab_head', 'tab_head' );
 		add_shortcode( 'tab_title', 'tab_title' );
@@ -2621,17 +2623,17 @@
 		add_shortcode( 'inline_lightbox_image', 'inline_lightbox_image' );
 		add_shortcode( 'inline_lightbox_video', 'inline_lightbox_video' );
 		add_shortcode( 'inline_lightbox_audio', 'inline_lightbox_audio' );
-		
+
 		// Do the shortcode ( only the one above is registered )
 		$content = do_shortcode( $content );
-		
+
 		// Put the original shortcodes back
 		$shortcode_tags = $orig_shortcode_tags;
-		
+
 		return $content;
 	}
 	// end my_run_shortcode
-	
+
 	add_filter( 'the_content', 'my_run_shortcode', 7 );
 
 /* ============================================================================================================================================= */
@@ -2639,11 +2641,11 @@
 	function tabs( $atts, $content = "" )
 	{
 		$tabs = '<div class="tabs">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $tabs;
 	}
 	// end tabs
-  
+
 	add_shortcode( 'tabs', 'tabs' );
 
 /* ============================================================================================================================================= */
@@ -2651,11 +2653,11 @@
 	function tab_head( $atts, $content = "" )
 	{
 		$tab_head = '<ul class="tab-titles">' . do_shortcode( $content ) . '</ul>';
-		
+
 		return $tab_head;
 	}
 	// end tab_head
-  
+
 	add_shortcode( 'tab_head', 'tab_head' );
 
 /* ============================================================================================================================================= */
@@ -2664,13 +2666,13 @@
 	{
 		extract( shortcode_atts( array( 'active' => "",
 										'title' => "" ), $atts ) );
-		
+
 		$tab_title = '<li><a class="' . $active . '">' . $title . '</a></li>';
-		
+
 		return $tab_title;
 	}
 	// end tab_title
-  
+
 	add_shortcode( 'tab_title', 'tab_title' );
 
 /* ============================================================================================================================================= */
@@ -2678,11 +2680,11 @@
 	function tab_content( $atts, $content = "" )
 	{
 		$tab_content = '<div class="tab-content">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $tab_content;
 	}
 	// end tab_content
-  
+
 	add_shortcode( 'tab_content', 'tab_content' );
 
 /* ============================================================================================================================================= */
@@ -2690,11 +2692,11 @@
 	function tab_pane( $atts, $content = "" )
 	{
 		$tab_pane = '<div>' . do_shortcode( $content ) . '</div>';
-		
+
 		return $tab_pane;
 	}
 	// end tab_pane
-  
+
 	add_shortcode( 'tab_pane', 'tab_pane' );
 
 /* ============================================================================================================================================= */
@@ -2707,13 +2709,13 @@
 										'direction' => 'horizontal',
 										'animationspeed' => '800',
 										'pauseonhover' => 'true' ), $atts ) );
-		
+
 		$inline_slider = '<div class="flexslider" data-autoplay="' . $autoplay . '" data-interval="' . $interval . '" data-animation="' . $animation . '" data-direction="' . $direction . '" data-animationSpeed="' . $animationspeed . '"  data-pauseOnHover="' . $pauseonhover . '"><ul class="slides">' . do_shortcode( $content ) . '</ul></div>';
-	 	
+
 		return $inline_slider;
 	}
 	// end inline_slider
-  
+
 	add_shortcode( 'inline_slider', 'inline_slider' );
 
 /* ============================================================================================================================================= */
@@ -2723,7 +2725,7 @@
 		extract( shortcode_atts( array( 'alt' => "",
 										'src' => "",
 										'url' => "" ), $atts ) );
-										
+
 		if ( $content != "" )
 		{
 			$content_out = '<p class="flex-title">' . do_shortcode( $content ) . '</p>';
@@ -2733,8 +2735,8 @@
 			$content_out = "";
 		}
 		// end if
-		
-		
+
+
 		if ( $url != "" )
 		{
 			$url_out = '<a href="' . $url . '"><img alt="' . $alt . '" src="' . $src . '"></a>';
@@ -2744,14 +2746,14 @@
 			$url_out = '<img alt="' . $alt . '" src="' . $src . '">';
 		}
 		// end if
-		
-		
+
+
 		$slide = '<li>' . $url_out . $content_out . '</li>';
-	 	
+
 		return $slide;
 	}
 	// end slide
-  
+
 	add_shortcode( 'slide', 'slide' );
 
 /* ============================================================================================================================================= */
@@ -2759,11 +2761,11 @@
 	function inline_media( $atts, $content = "" )
 	{
 		$inline_media = '<div class="media-wrap">' . do_shortcode( $content ) . '</div>';
-	 	
+
 		return $inline_media;
 	}
 	// end inline_media
-  
+
 	add_shortcode( 'inline_media', 'inline_media' );
 
 /* ============================================================================================================================================= */
@@ -2771,11 +2773,11 @@
 	function row( $atts, $content = "" )
 	{
 		$row = '<div class="row-fluid">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $row;
 	}
 	// end row
-  
+
 	add_shortcode( 'row', 'row' );
 
 /* ============================================================================================================================================= */
@@ -2784,13 +2786,13 @@
 	{
 		extract( shortcode_atts( array( 'width' => "",
 										'offset' => "" ), $atts ) );
-		
+
 		$column = '<div class="span' . $width . ' offset' . $offset . '">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $column;
 	}
 	// end column
-  
+
 	add_shortcode( 'column', 'column' );
 
 /* ============================================================================================================================================= */
@@ -2798,11 +2800,11 @@
 	function portfolio_text( $atts, $content = "" )
 	{
 		$portfolio_text = '<div class="portfolio-text">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $portfolio_text;
 	}
 	// end portfolio_text
-  
+
 	add_shortcode( 'portfolio_text', 'portfolio_text' );
 
 /* ============================================================================================================================================= */
@@ -2811,13 +2813,13 @@
 	{
 		extract( shortcode_atts( array( 'text' => "",
 										'url' => "" ), $atts ) );
-		
+
 		$launch_button = '<p class="launch-wrap"><a href="' . $url . '">' . $text . '</a></p>';
-		
+
 		return $launch_button;
 	}
 	// end launch_button
-  
+
 	add_shortcode( 'launch_button', 'launch_button' );
 
 /* ============================================================================================================================================= */
@@ -2825,11 +2827,11 @@
 	function toggles( $atts, $content = "" )
 	{
 		$toggles = '<div class="toggle-group">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $toggles;
 	}
 	// end toggles
-  
+
 	add_shortcode( 'toggles', 'toggles' );
 
 /* ============================================================================================================================================= */
@@ -2838,13 +2840,13 @@
 	{
 		extract( shortcode_atts( array( 'active' => "",
 										'title' => "" ), $atts ) );
-		
+
 		$toggle = '<div class="toggle"><h4 class="' . $active . '">' . $title . '</h4><div class="toggle-content">' . do_shortcode( $content ) . '</div></div>';
-		
+
 		return $toggle;
 	}
 	// end toggle
-  
+
 	add_shortcode( 'toggle', 'toggle' );
 
 /* ============================================================================================================================================= */
@@ -2852,11 +2854,11 @@
 	function accordions( $atts, $content = "" )
 	{
 		$accordions = '<div class="toggle-group accordion">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $accordions;
 	}
 	// end accordions
-  
+
 	add_shortcode( 'accordions', 'accordions' );
 
 /* ============================================================================================================================================= */
@@ -2865,13 +2867,13 @@
 	{
 		extract( shortcode_atts( array( 'active' => "",
 										'title' => "" ), $atts ) );
-		
+
 		$accordion = '<div class="toggle"><h4 class="' . $active . '">' . $title . '</h4><div class="toggle-content">' . do_shortcode( $content ) . '</div></div>';
-		
+
 		return $accordion;
 	}
 	// end accordion
-  
+
 	add_shortcode( 'accordion', 'accordion' );
 
 /* ============================================================================================================================================= */
@@ -2879,13 +2881,13 @@
 	function alert( $atts, $content = "" )
 	{
 		extract( shortcode_atts( array( 'type' => "" ), $atts ) );
-		
+
 		$alert = '<div class="alert ' . $type . '">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $alert;
 	}
 	// end alert
-  
+
 	add_shortcode( 'alert', 'alert' );
 
 /* ============================================================================================================================================= */
@@ -2893,11 +2895,11 @@
 	function call_to_action( $atts, $content = "" )
 	{
 		$call_to_action = '<div class="cta row-fluid">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $call_to_action;
 	}
 	// end call_to_action
-  
+
 	add_shortcode( 'call_to_action', 'call_to_action' );
 
 /* ============================================================================================================================================= */
@@ -2905,11 +2907,11 @@
 	function cta_button_wrap( $atts, $content = "" )
 	{
 		$cta_button_wrap = '<div class="cta-button">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $cta_button_wrap;
 	}
 	// end cta_button_wrap
-  
+
 	add_shortcode( 'cta_button_wrap', 'cta_button_wrap' );
 
 /* ============================================================================================================================================= */
@@ -2917,11 +2919,11 @@
 	function project_action( $atts, $content = "" )
 	{
 		$project_action = '<div class="project-action row-fluid">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $project_action;
 	}
 	// end project_action
-  
+
 	add_shortcode( 'project_action', 'project_action' );
 
 /* ============================================================================================================================================= */
@@ -2934,7 +2936,7 @@
 										'type' => "",
 										'icon' => "",
 										'url' => "" ), $atts ) );
-										
+
 		if ( $icon == 'linkedin' )
 		{
 			$icon_out = '<i class="icon-linkedin-sign"></i>';
@@ -2987,13 +2989,13 @@
 		{
 			$icon_out = "";
 		}
-		
+
 		$button = '<a target="' . $target . '" class="button ' . $color . ' ' . $size . ' ' . $type . '" href="' . $url . '">' . $icon_out . do_shortcode( $content ) . '</a>';
-		
+
 		return $button;
 	}
 	// end button
-  
+
 	add_shortcode( 'button', 'button' );
 
 /* ============================================================================================================================================= */
@@ -3001,7 +3003,7 @@
 	function lead_p( $atts, $content = "" )
 	{
 		extract( shortcode_atts( array( 'drop_caps' => "" ), $atts ) );
-		
+
 		if ( $drop_caps == 'yes' )
 		{
 			$drop_caps_out = 'drop-cap';
@@ -3010,13 +3012,13 @@
 		{
 			$drop_caps_out = "";
 		}
-		
+
 		$lead_p = '<p class="lead ' . $drop_caps_out . '">' . do_shortcode( $content ) . '</p>';
-		
+
 		return $lead_p;
 	}
 	// end lead_p
-	
+
 	add_shortcode( 'lead_p', 'lead_p' );
 
 /* ============================================================================================================================================= */
@@ -3024,11 +3026,11 @@
 	function drop_caps( $atts, $content = "" )
 	{
 		$drop_caps = '<p class="drop-cap">' . do_shortcode( $content ) . '</p>';
-		
+
 		return $drop_caps;
 	}
 	// end drop_caps
-	
+
 	add_shortcode( 'drop_caps', 'drop_caps' );
 
 /* ============================================================================================================================================= */
@@ -3036,11 +3038,11 @@
 	function tagline( $atts, $content = "" )
 	{
 		$tagline = '<div class="tagline">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $tagline;
 	}
 	// end tagline
-	
+
 	add_shortcode( 'tagline', 'tagline' );
 
 /* ============================================================================================================================================= */
@@ -3048,13 +3050,13 @@
 	function syntax_prettify( $atts, $content = "" )
 	{
 		extract( shortcode_atts( array( 'linenums' => "" ), $atts ) );
-		
+
 		$syntax_prettify = '<pre class="prettyprint ' . $linenums . '">' . do_shortcode( $content ) . '</pre>';
-		
+
 		return $syntax_prettify;
 	}
 	// end syntax_prettify
-  
+
 	add_shortcode( 'syntax_prettify', 'syntax_prettify' );
 
 /* ============================================================================================================================================= */
@@ -3062,13 +3064,13 @@
 	function lists( $atts, $content = "" )
 	{
 		extract( shortcode_atts( array( 'type' => "" ), $atts ) );
-		
+
 		$lists = '<ul class="icons icon-' . $type . '-list">' . do_shortcode( $content ) . '</ul>';
-		
+
 		return $lists;
 	}
 	// end lists
-  
+
 	add_shortcode( 'lists', 'lists' );
 
 /* ============================================================================================================================================= */
@@ -3076,11 +3078,11 @@
 	function list_item( $atts, $content = "" )
 	{
 		$list_item = '<li>' . do_shortcode( $content ) . '</li>';
-		
+
 		return $list_item;
 	}
 	// end list_item
-  
+
 	add_shortcode( 'list_item', 'list_item' );
 
 /* ============================================================================================================================================= */
@@ -3088,11 +3090,11 @@
 	function social_icons( $atts, $content = "" )
 	{
 		$social_icons = '<ul class="social">' . do_shortcode( $content ) . '</ul>';
-		
+
 		return $social_icons;
 	}
 	// end social_icons
-	
+
 	add_shortcode( 'social_icons', 'social_icons' );
 
 /* ============================================================================================================================================= */
@@ -3102,7 +3104,7 @@
 		extract( shortcode_atts( array( 'type' => "",
 										'title' => "",
 										'url' => "" ), $atts ) );
-		
+
 		if ( $type == 'facebook' ) { $type_icon = '&#88;'; }
 		elseif ( $type == 'twitter' ) { $type_icon = '&#95;'; }
 		elseif ( $type == 'linkedin' ) { $type_icon = '&#118;'; }
@@ -3128,13 +3130,13 @@
 		elseif ( $type == 'wordpress' ) { $type_icon = '$'; }
 		elseif ( $type == 'instagram' ) { $type_icon = ""; }
 		else { $type_icon = ""; }
-		
+
 		$social_icon = '<li><a target="_blank" class="' . $type . '" href="' . $url . '">' . $type_icon . '</a></li>';
-		
+
 		return $social_icon;
 	}
 	// end social_icon
-  
+
 	add_shortcode( 'social_icon', 'social_icon' );
 
 /* ============================================================================================================================================= */
@@ -3142,11 +3144,11 @@
 	function intro( $atts, $content = "" )
 	{
 		$intro = '<div class="intro">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $intro;
 	}
 	// end intro
-  
+
 	add_shortcode( 'intro', 'intro' );
 
 /* ============================================================================================================================================= */
@@ -3154,11 +3156,11 @@
 	function label( $atts, $content = "" )
 	{
 		$label = '<span class="label">' . do_shortcode( $content ) . '</span>';
-		
+
 		return $label;
 	}
 	// end label
-  
+
 	add_shortcode( 'label', 'label' );
 
 /* ============================================================================================================================================= */
@@ -3167,13 +3169,13 @@
 	{
 		extract( shortcode_atts( array( 'text' => "",
 										'url' => "" ), $atts ) );
-		
+
 		$view_button = '<p class="launch-wrap"><a href="' . $url . '">' . $text . '</a></p>';
-		
+
 		return $view_button;
 	}
 	// end view_button
-  
+
 	add_shortcode( 'view_button', 'view_button' );
 
 /* ============================================================================================================================================= */
@@ -3181,11 +3183,11 @@
 	function divider( $atts, $content = "" )
 	{
 		$divider = '<hr>';
-		
+
 		return $divider;
 	}
 	// end divider
-  
+
 	add_shortcode( 'divider', 'divider' );
 
 /* ============================================================================================================================================= */
@@ -3194,8 +3196,8 @@
 	{
 		extract( shortcode_atts( array( 'title' => "",
 										'url' => "" ), $atts ) );
-									
-									
+
+
 		if ( is_single() )
 		{
 			$lightbox_audio = '<iframe style="width: 100%;" src="' . $url . '"></iframe>';
@@ -3204,11 +3206,11 @@
 		{
 			$lightbox_audio = '<a class="lightbox iframe" data-lightbox-gallery="fancybox-item-' . get_the_ID() . '" title="' . $title . '" href="' . $url . '"></a>';
 		}
-		
+
 		return $lightbox_audio;
 	}
 	// end lightbox_audio
-  
+
 	add_shortcode( 'lightbox_audio', 'lightbox_audio' );
 
 /* ============================================================================================================================================= */
@@ -3217,8 +3219,8 @@
 	{
 		extract( shortcode_atts( array( 'title' => "",
 										'url' => "" ), $atts ) );
-										
-										
+
+
 		if ( is_single() )
 		{
 			$lightbox_video = '<div class="media-wrap"><iframe src="' . $url . '"></iframe></div>';
@@ -3227,11 +3229,11 @@
 		{
 			$lightbox_video = '<a class="lightbox iframe" data-lightbox-gallery="fancybox-item-' . get_the_ID() . '" title="' . $title . '" href="' . $url . '"></a>';
 		}
-		
+
 		return $lightbox_video;
 	}
 	// end lightbox_video
-	
+
 	add_shortcode( 'lightbox_video', 'lightbox_video' );
 
 /* ============================================================================================================================================= */
@@ -3241,7 +3243,7 @@
 		extract( shortcode_atts( array( 'title' => "",
 										'url' => "",
 										'first_image' => "yes" ), $atts ) );
-										
+
 		if ( $first_image == "yes" )
 		{
 			$first_image_out = "";
@@ -3250,8 +3252,8 @@
 		{
 			$first_image_out = 'hidden';
 		}
-		
-		
+
+
 		if ( is_single() )
 		{
 			$lightbox_image .= '<img style="display: block; margin-left: auto; margin-right: auto;" alt="' . $title . '" src="' . $url . '">';
@@ -3260,11 +3262,11 @@
 		{
 			$lightbox_image = '<a class="lightbox ' . $first_image_out . '" data-lightbox-gallery="fancybox-item-' . get_the_ID() . '" title="' . $title . '" href="' . $url . '"></a>';
 		}
-		
+
 		return $lightbox_image;
 	}
 	// end lightbox_image
-  
+
 	add_shortcode( 'lightbox_image', 'lightbox_image' );
 
 /* ============================================================================================================================================= */
@@ -3272,11 +3274,11 @@
 	function aside_content( $atts, $content = "" )
 	{
 		$aside_content = '<div class="aside-content">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $aside_content;
 	}
 	// end aside_content
-  
+
 	add_shortcode( 'aside_content', 'aside_content' );
 
 /* ============================================================================================================================================= */
@@ -3284,11 +3286,11 @@
 	function link_content( $atts, $content = "" )
 	{
 		$link_content = '<div class="link-content">' . do_shortcode( $content ) . '</div>';
-		
+
 		return $link_content;
 	}
 	// end link_content
-  
+
 	add_shortcode( 'link_content', 'link_content' );
 
 /* ============================================================================================================================================= */
@@ -3298,7 +3300,7 @@
 		extract( shortcode_atts( array( 'type' => "",
 										'thumbnail' => "",
 										'alt' => "" ), $atts ) );
-		
+
 		$inline_lightbox_wrap = '<div class="inline-lightbox ' . $type . '">';
 		$inline_lightbox_wrap .= '<div class="media-box">';
 		$inline_lightbox_wrap .= '<img  alt="' . $alt . '" src="' . $thumbnail . '">';
@@ -3308,11 +3310,11 @@
 		$inline_lightbox_wrap .= '</div>';
 		$inline_lightbox_wrap .= '</div>';
 		$inline_lightbox_wrap .= '</div>';
-		
+
 		return $inline_lightbox_wrap;
 	}
 	// end inline_lightbox_wrap
-  
+
 	add_shortcode( 'inline_lightbox_wrap', 'inline_lightbox_wrap' );
 
 /* ============================================================================================================================================= */
@@ -3323,7 +3325,7 @@
 										'gallery' => "",
 										'title' => "",
 										'url' => "" ), $atts ) );
-										
+
 		if ( $first_image == 'yes' )
 		{
 			$first_image_out = "";
@@ -3332,13 +3334,13 @@
 		{
 			$first_image_out = 'hidden';
 		}
-		
+
 		$inline_lightbox_image = '<a class="lightbox ' . $first_image_out . '" data-lightbox-gallery="fancybox-item-' . $gallery . '" title="' . $title . '" href="' . $url . '"></a>';
-		
+
 		return $inline_lightbox_image;
 	}
 	// end inline_lightbox_image
-  
+
 	add_shortcode( 'inline_lightbox_image', 'inline_lightbox_image' );
 
 /* ============================================================================================================================================= */
@@ -3348,14 +3350,14 @@
 		extract( shortcode_atts( array( 'gallery' => "",
 										'title' => "",
 										'url' => "" ), $atts ) );
-										
-		
+
+
 		$inline_lightbox_video = '<a class="lightbox iframe" data-lightbox-gallery="fancybox-item-' . $gallery . '" title="' . $title . '" href="' . $url . '"></a>';
-		
+
 		return $inline_lightbox_video;
 	}
 	// end inline_lightbox_video
-  
+
 	add_shortcode( 'inline_lightbox_video', 'inline_lightbox_video' );
 
 /* ============================================================================================================================================= */
@@ -3365,14 +3367,14 @@
 		extract( shortcode_atts( array( 'gallery' => "",
 										'title' => "",
 										'url' => "" ), $atts ) );
-										
-		
+
+
 		$inline_lightbox_audio = '<a class="lightbox iframe" data-lightbox-gallery="fancybox-item-' . $gallery . '" title="' . $title . '" href="' . $url . '"></a>';
-		
+
 		return $inline_lightbox_audio;
 	}
 	// end inline_lightbox_audio
-  
+
 	add_shortcode( 'inline_lightbox_audio', 'inline_lightbox_audio' );
 
 /* ============================================================================================================================================= */
@@ -3382,15 +3384,15 @@
 		// Enqueue script
 		wp_enqueue_script( 'jquery' );
 	}
-	
+
 	add_action( 'login_enqueue_scripts', 'theme_enqueue_login' );
-	
-	
+
+
 	function my_login_head()
 	{
 		$logo_login_hide = get_option( 'logo_login_hide', false );
 		$logo_login = get_option( 'logo_login', "" );
-		
+
 		if ( $logo_login_hide )
 		{
 			echo '<style type="text/css"> h1 { display: none; } </style>';
@@ -3400,7 +3402,7 @@
 			if ( $logo_login != "" )
 			{
 				echo '<style type="text/css"> h1 a { cursor: default; background-image: url("' . $logo_login . '") !important; }</style>';
-				
+
 				echo '<script>
 						jQuery(document).ready( function($)
 						{
@@ -3412,22 +3414,22 @@
 			// end if
 		}
 		// end if
-		
-		
+
+
 		$favicon = get_option( 'favicon', "" );
-		
+
 		if ( $favicon != "" )
 		{
 			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
 		}
-		
-		
+
+
 		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
-		
+
 		if ( $apple_touch_icon != "" )
 		{
 			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
-			
+
 			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
 			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
 			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
@@ -3436,27 +3438,27 @@
 		// end if
 	}
 	// end my_login_head
-	
+
 	add_action( 'login_head', 'my_login_head' );
-	
+
 /* ============================================================================================================================================= */
-	
+
 	function my_admin_head()
 	{
 		$favicon = get_option( 'favicon', "" );
-		
+
 		if ( $favicon != "" )
 		{
 			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
 		}
-		
-		
+
+
 		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
-		
+
 		if ( $apple_touch_icon != "" )
 		{
 			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
-			
+
 			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
 			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
 			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
@@ -3465,7 +3467,7 @@
 		// end if
 	}
 	// end my_admin_head
-	
+
 	add_action( 'admin_head', 'my_admin_head' );
 
 /* ============================================================================================================================================= */
@@ -3475,20 +3477,20 @@
 		// Register style
 		wp_register_style( 'adminstyle', get_template_directory_uri() . '/admin/adminstyle.css' );
 		wp_register_style( 'colorpicker', get_template_directory_uri() . '/admin/colorpicker/colorpicker.css' );
-		
-		
+
+
 		// Enqueue style
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'adminstyle' );
 		wp_enqueue_style( 'colorpicker' );
-		
-		
+
+
 		// Enqueue script
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_script( 'media-upload' );
 	}
 	// end your_admin_enqueue_scripts
-	
+
 	add_action( 'admin_enqueue_scripts', 'your_admin_enqueue_scripts' );
 
 /* ============================================================================================================================================= */
@@ -3507,96 +3509,96 @@
 	function theme_customize_register( $wp_customize )
 	{
 		$wp_customize->add_section( 'section_colors' , array( 'title' => __( 'Colors', 'read' ), 'priority' => 30 ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_link_color', array( 'default' => '#ce6607', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'control_link_color', array( 'label' => __( 'Link Color', 'read' ),
 																												'section' => 'section_colors',
 																												'settings' => 'setting_link_color' ) ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_link_hover_color', array( 'default' => '#a35208', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'control_link_hover_color', array(   'label' => __( 'Link Hover Color', 'read' ),
 																														'section' => 'section_colors',
 																														'settings' => 'setting_link_hover_color' ) ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_menu_active_color', array(	'default' => '#cc3300', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'control_menu_active_color', array(  'label' => __( 'Menu Active Color', 'read' ),
 																														'section' => 'section_colors',
 																														'settings' => 'setting_menu_active_color' ) ) );
-		
+
 		/* ================================================== */
 		/* ================================================== */
-		
+
 		$wp_customize->add_section( 'section_fonts' , array( 'title' => __( 'Fonts', 'read' ), 'priority' => 30 ) );
-		
+
 		/* ========================= */
-		
+
 		include_once 'fonts.php';
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_text_logo_font', array( 'default' => 'UnifrakturMaguntia', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( 'control_text_logo_font', array(    'label' => 'Text Logo Font',
 																		'section' => 'section_fonts',
 																		'settings' => 'setting_text_logo_font',
 																		'type' => 'select',
 																		'choices' => $all_fonts ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_heading_font', array( 'default' => 'Coustard', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( 'control_heading_font', array(	'label' => 'Heading Font',
 																	'section' => 'section_fonts',
 																	'settings' => 'setting_heading_font',
 																	'type' => 'select',
 																	'choices' => $all_fonts ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_menu_font', array(	'default' => 'Coustard', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( 'control_menu_font', array(	'label' => 'Menu Font',
 																'section' => 'section_fonts',
 																'settings' => 'setting_menu_font',
 																'type' => 'select',
 																'choices' => $all_fonts ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->add_setting( 'setting_content_font', array( 'default' => 'Lora', 'transport' => 'refresh' ) );
-		
+
 		$wp_customize->add_control( 'control_content_font', array(	'label' => 'Content Font',
 																	'section' => 'section_fonts',
 																	'settings' => 'setting_content_font',
 																	'type' => 'select',
 																	'choices' => $all_fonts ) );
-		
+
 		/* ========================= */
-		
+
 		$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
-		
+
 		$wp_customize->get_setting( 'setting_link_color' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'setting_link_hover_color' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'setting_menu_active_color' )->transport = 'postMessage';
-		
+
 		$wp_customize->get_setting( 'setting_text_logo_font' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'setting_heading_font' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'setting_menu_font' )->transport = 'postMessage';
 		$wp_customize->get_setting( 'setting_content_font' )->transport = 'postMessage';
 	}
 	// end theme_customize_register
-	
+
 	add_action( 'customize_register', 'theme_customize_register' );
 
 
@@ -3627,15 +3629,15 @@
 		<?php
 	}
 	// end theme_customize_css
-	
+
 	add_action( 'wp_head', 'theme_customize_css' );
-	
-	
+
+
 	function theme_customize_preview_js()
 	{
 		wp_enqueue_script( 'my-customizer', get_template_directory_uri() . '/js/wp-theme-customizer.js', array( 'customize-preview' ), '1.0', true );
 	}
-	
+
 	add_action( 'customize_preview_init', 'theme_customize_preview_js' );
 
 /* ============================================================================================================================================= */
@@ -3643,27 +3645,27 @@
 	function options_wp_head()
 	{
 		$custom_css = stripcslashes( get_option( 'custom_css', "" ) );
-	
+
 		if ( $custom_css != "" )
 		{
 			echo '<style type="text/css">' . "\n";
-			
+
 				echo $custom_css;
-			
+
 			echo "\n" . '</style>' . "\n";
 		}
 		// end if
-		
-		
+
+
 		$external_css = stripcslashes( get_option( 'external_css', "" ) );
 		echo $external_css;
-		
-		
+
+
 		$tracking_code_head = stripcslashes( get_option( 'tracking_code_head', "" ) );
 		echo $tracking_code_head;
 	}
 	// end options_wp_head
-	
+
 	add_action( 'wp_head', 'options_wp_head' );
 
 /* ============================================================================================================================================= */
@@ -3672,13 +3674,13 @@
 	{
 		$external_js = stripcslashes( get_option( 'external_js', "" ) );
 		echo $external_js;
-		
-		
+
+
 		$tracking_code = stripcslashes( get_option( 'tracking_code', "" ) );
 		echo $tracking_code;
 	}
 	// end options_wp_footer
-	
+
 	add_action( 'wp_footer', 'options_wp_footer' );
 
 /* ============================================================================================================================================= */
