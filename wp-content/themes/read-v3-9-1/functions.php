@@ -248,9 +248,7 @@
 		{
 			require_once( $locale_file );
 		}
-
-		$date_formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG,
-				                                IntlDateFormatter::NONE, 'Europe/Brussels');
+		$date_formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE, 'Europe/Brussels');
 	}
 	// end my_theme_setup
 

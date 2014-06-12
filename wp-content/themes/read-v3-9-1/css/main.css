@@ -1105,6 +1105,14 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cake1.png");
 }
 
+.food-icon-cake2 {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cake2.png");
+}
+
+.food-icon-cake3 {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cake3.png");
+}
+
 .food-icon-cake4 {
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cake4.png");
 }
@@ -1133,8 +1141,16 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/preserves.png");
 }
 
+.food-icon-cocktail1 {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cocktail1.png");
+}
+
 .food-icon-cocktail2 {
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cocktail2.png");
+}
+
+.food-icon-cocktail3 {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cocktail3.png");
 }
 
 .food-icon-cocktail4 {
@@ -1143,6 +1159,26 @@ a.loadmore { display:block; position:relative; margin: 3em auto 0 auto; max-widt
 
 .food-icon-apricot {
   background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/apricot.png");
+}
+
+.food-icon-beets {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/beets.png");
+}
+
+.food-icon-chocolate {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/chocolate.png");
+}
+
+.food-icon-pie {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/pie.png");
+}
+
+.food-icon-salad {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/salad.png");
+}
+
+.food-icon-cupcake {
+  background-image: url("/wp-content/themes/read-v3-9-1/images/food/48x48/cupcake.png");
 }
 
 .collage.half-left {

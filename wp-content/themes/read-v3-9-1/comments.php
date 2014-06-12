@@ -18,7 +18,7 @@
 					?>
 				</h2>
 				<!-- end .comments-title -->
-				
+
 				<ol class="commentlist">
 					<?php
 						wp_list_comments( array('callback' => 'theme_comments',
@@ -26,21 +26,21 @@
 					?>
 				</ol>
 				<!-- end .commentlist -->
-				
+
 				<?php
 					// are there comments to navigate through
 					if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) :
 						?>
 							<nav id="comment-nav-below" class="navigation" role="navigation">
 								<h1 class="assistive-text section-heading"><?php _e( 'Comment navigation', 'read' ); ?></h1>
-								
+
 								<div class="nav-previous">
 									<?php
 										previous_comments_link( __( '&larr; Older Comments', 'read' ) );
 									?>
 								</div>
 								<!-- end .nav-previous -->
-								
+
 								<div class="nav-next">
 									<?php
 										next_comments_link( __( 'Newer Comments &rarr;', 'read' ) );
@@ -53,7 +53,7 @@
 					endif;
 					// end Check for comment navigation
 				?>
-				
+
 				<?php
 					if ( ! comments_open() && get_comments_number() ) :
 						?>
@@ -64,7 +64,7 @@
 			<?php
 		endif;
 	?>
-	
+
 	<?php
 		$commenter = wp_get_current_commenter();
 		$require_name_email = get_option( 'require_name_email' );
