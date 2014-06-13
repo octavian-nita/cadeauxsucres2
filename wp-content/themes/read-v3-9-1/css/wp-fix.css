@@ -78,3 +78,6 @@ blockquote p { margin: 0px; }
 .site-header .textwidget ul.social { margin-top: 0px; }
 
 .entry-meta .comments-link { white-space: nowrap; }
+
+.share-wrap .fb_iframe_widget > span,
+.share-wrap .fb_iframe_widget iframe { height: 20px !important; width: 78px !important; }

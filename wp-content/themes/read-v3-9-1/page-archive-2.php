@@ -16,6 +16,11 @@ Template Name: Archive 2
 					while ( have_posts() ) : the_post();
 						?>
 							<article id="post-<?php the_ID(); ?>" <?php post_class( 'page hentry clearfix' ); ?> style="padding-top: 0;">
+								<header class="entry-header">
+									<h1 class="entry-title"><?php the_title(); ?></h1>
+								</header>
+								<!-- end .entry-header -->
+
 								<div class="entry-content">
 									<?php
 										the_content();
@@ -60,6 +65,7 @@ Template Name: Archive 2
 									
 								    <div class="post-list archives-list archives-tag archives-by-month">
 										<h2><?php echo __( 'Archives by month', 'read' ); ?></h2>
+										
 										<ul>
 											<?php
 												$args = array(  'format' => 'custom', 

@@ -16,6 +16,7 @@
 		
 	endif;
 	
+	
 	$pf_thumb_size = get_option( $post->ID . 'pf_thumb_size' );
 ?>
 
@@ -44,7 +45,6 @@
 				<?php
 					$pf_short_description = stripcslashes( get_option( $post->ID . 'pf_short_description' ) );
 				?>
-				
 				<p class="category"><?php echo $pf_short_description; ?></p>
 			</div>
 			<!-- end .portfolio-info -->

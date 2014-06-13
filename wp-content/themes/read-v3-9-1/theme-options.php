@@ -500,6 +500,25 @@
 														
 														<tr>
 															<td class="option-left">
+																<h4>Font Styles</h4>
+																
+																<?php
+																	$extra_font_styles = get_option( 'extra_font_styles', 'No' );
+																?>
+																<select id="extra_font_styles" name="extra_font_styles" style="width: 100%;">
+																	<option <?php if ( $extra_font_styles == 'Yes' ) { echo 'selected="selected"'; } ?>>Yes</option>
+																	
+																	<option <?php if ( $extra_font_styles == 'No' ) { echo 'selected="selected"'; } ?>>No</option>
+																</select>
+															</td>
+															
+															<td class="option-right">
+																Bold and italic styles.
+															</td>
+														</tr>
+														
+														<tr>
+															<td class="option-left">
 																<h4>Menu Search</h4>
 																
 																<?php
@@ -685,7 +704,28 @@
 															</td>
 															
 															<td class="option-right">
-																Select blog layout.
+																Select layout type.
+															</td>
+														</tr>
+														
+														<tr>
+															<td class="option-left">
+																<h4>Category Archive Type</h4>
+																
+																<?php
+																	$category_archive_type = get_option( 'category_archive_type', 'Masonry' );
+																?>
+																<select id="category_archive_type" name="category_archive_type" style="width: 100%;">
+																	<option <?php if ( $category_archive_type == 'Sidebar' ) { echo 'selected="selected"'; } ?>>Sidebar</option>
+																	
+																	<option <?php if ( $category_archive_type == 'No Sidebar' ) { echo 'selected="selected"'; } ?>>No Sidebar</option>
+																	
+																	<option <?php if ( $category_archive_type == 'Masonry' ) { echo 'selected="selected"'; } ?>>Masonry</option>
+																</select>
+															</td>
+															
+															<td class="option-right">
+																Select layout type.
 															</td>
 														</tr>
 														
@@ -750,25 +790,6 @@
 														
 														<tr>
 															<td class="option-left">
-																<h4>All Post Formats on Homepage</h4>
-																
-																<?php
-																	$all_formats_homepage = get_option( 'all_formats_homepage', 'No' );
-																?>
-																<select id="all_formats_homepage" name="all_formats_homepage" style="width: 100%;">
-																	<option <?php if ( $all_formats_homepage == 'Yes' ) { echo 'selected="selected"'; } ?>>Yes</option>
-																	
-																	<option <?php if ( $all_formats_homepage == 'No' ) { echo 'selected="selected"'; } ?>>No</option>
-																</select>
-															</td>
-															
-															<td class="option-right">
-																Show all post formats or just standard.
-															</td>
-														</tr>
-														
-														<tr>
-															<td class="option-left">
 																<h4>About The Author Module</h4>
 																
 																<?php
@@ -802,6 +823,25 @@
 															
 															<td class="option-right">
 																Activate/deactivate.
+															</td>
+														</tr>
+														
+														<tr>
+															<td class="option-left">
+																<h4>All Post Formats on Homepage</h4>
+																
+																<?php
+																	$all_formats_homepage = get_option( 'all_formats_homepage', 'No' );
+																?>
+																<select id="all_formats_homepage" name="all_formats_homepage" style="width: 100%;">
+																	<option <?php if ( $all_formats_homepage == 'Yes' ) { echo 'selected="selected"'; } ?>>Yes</option>
+																	
+																	<option <?php if ( $all_formats_homepage == 'No' ) { echo 'selected="selected"'; } ?>>No</option>
+																</select>
+															</td>
+															
+															<td class="option-right">
+																Show all post formats or just standard.
 															</td>
 														</tr>
 														
@@ -1171,12 +1211,17 @@
 																	<?php
 																		$sidebars_with_commas = get_option( 'sidebars_with_commas' );
 																	
+																		if ( $sidebars_with_commas != "" )
+																		{
 																		$sidebars = preg_split("/[\s]*[,][\s]*/", $sidebars_with_commas);
 
 																		foreach ( $sidebars as $sidebar_name )
 																		{
 																			echo '<option>' . $sidebar_name . '</option>';
 																		}
+																			// end for
+																		}
+																		// end if
 																	?>
 																</select>
 															</td>
@@ -1492,6 +1537,7 @@
 					update_option( 'char_set_vietnamese', $_POST['char_set_vietnamese'] );
 					
 					update_option( 'nav_menu_search', $_POST['nav_menu_search'] );
+					update_option( 'extra_font_styles', $_POST['extra_font_styles'] );
 					update_option( 'footer_widget_locations', $_POST['footer_widget_locations'] );
 					update_option( 'footer_widget_columns', $_POST['footer_widget_columns'] );
 					update_option( 'mobile_zoom', $_POST['mobile_zoom'] );
@@ -1504,6 +1550,7 @@
 				case 'blog' :
 					
 					update_option( 'blog_type', $_POST['blog_type'] );
+					update_option( 'category_archive_type', $_POST['category_archive_type'] );
 					update_option( 'post_sidebar', $_POST['post_sidebar'] );
 					update_option( 'theme_excerpt', $_POST['theme_excerpt'] );
 					update_option( 'pagination', $_POST['pagination'] );
@@ -1542,7 +1589,9 @@
 					
 					if ( esc_attr( $_POST['new_sidebar_name'] ) != "" )
 					{
-						if ( get_option( 'sidebars_with_commas' ) == "" )
+						$sidebars_with_commas = get_option( 'sidebars_with_commas', "" );
+						
+						if ( $sidebars_with_commas == "" )
 						{
 							update_option( 'sidebars_with_commas', esc_attr( $_POST['new_sidebar_name'] ) );
 						}
@@ -1550,7 +1599,9 @@
 						{
 							update_option( 'sidebars_with_commas', get_option( 'sidebars_with_commas' ) . ',' . esc_attr( $_POST['new_sidebar_name'] ) );
 						}
+						// end if
 					}
+					// end if
 				
 				break;
 				

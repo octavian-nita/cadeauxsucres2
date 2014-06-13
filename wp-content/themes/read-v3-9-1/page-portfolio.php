@@ -52,6 +52,7 @@ Template Name: Portfolio
 						// end if
 					?>
 					
+					
 					<ul id="filters">
 						<?php
 							$pf_terms = get_categories( 'type=portfolio&taxonomy=department' );
@@ -64,6 +65,8 @@ Template Name: Portfolio
 									</li>
 								<?php
 							}
+							// end if
+							
 							
 							foreach ( $pf_terms as $pf_term ) :
 								?>
@@ -75,6 +78,7 @@ Template Name: Portfolio
 						?>
 					</ul>
 					<!-- end #filters -->
+					
 					
 					<?php
 						$pf_ajax = get_option( 'pf_ajax', 'No' );
@@ -138,6 +142,7 @@ Template Name: Portfolio
 						// end if
 					?>
 					<!-- end PORTFOLIO -->
+					
 					
 					<?php
 						if ( $pf_content_editor == 'Bottom' )

@@ -2,6 +2,38 @@
 
 /* ============================================================================================================================================= */
 
+	function theme_enqueue_login()
+	{
+		wp_enqueue_script( 'jquery' );
+	}
+
+	add_action( 'login_enqueue_scripts', 'theme_enqueue_login' );
+
+/* ============================================================================================================================================= */
+
+	function your_admin_enqueue_scripts()
+	{
+		// Register style
+		wp_register_style( 'adminstyle', get_template_directory_uri() . '/admin/adminstyle.css' );
+		wp_register_style( 'colorpicker', get_template_directory_uri() . '/admin/colorpicker/colorpicker.css' );
+
+
+		// Enqueue style
+		wp_enqueue_style( 'thickbox' );
+		wp_enqueue_style( 'adminstyle' );
+		wp_enqueue_style( 'colorpicker' );
+
+
+		// Enqueue script
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_script( 'media-upload' );
+	}
+	// end your_admin_enqueue_scripts
+
+	add_action( 'admin_enqueue_scripts', 'your_admin_enqueue_scripts' );
+
+/* ============================================================================================================================================= */
+
 	function theme_enqueue()
 	{
 		$extra_char_set = false;
@@ -81,6 +113,7 @@
 		wp_register_script( 'mediaelement-and-player', get_template_directory_uri() . '/js/mediaelement/mediaelement-and-player.min.js', null, null, true );
 		wp_register_script( 'isotope', get_template_directory_uri() . '/js/jquery.isotope.min.js', null, null, true );
 		wp_register_script( 'fancybox', get_template_directory_uri() . '/js/jquery.fancybox-1.3.4.pack.js', null, null, true );
+		wp_deregister_script( 'masonry' );
 		wp_register_script( 'masonry', get_template_directory_uri() . '/js/jquery.masonry.min.js', null, null, true );
 		wp_register_script( 'history', get_template_directory_uri() . '/js/jquery.history.js', null, null, true );
 		wp_register_script( 'js-url', get_template_directory_uri() . '/js/js-url.min.js', null, null, true );
@@ -240,10 +273,12 @@
 		add_filter( 'get_archives_link', 'get_archives_link_localized' );
 
 		$lang_dir = get_template_directory() . '/languages';
+
 		load_theme_textdomain( 'read', $lang_dir );
 
 		$locale = get_locale();
 		$locale_file = get_template_directory() . "/languages/$locale.php";
+
 		if ( is_readable( $locale_file ) )
 		{
 			require_once( $locale_file );
@@ -306,6 +341,88 @@
 
 	add_action( 'wp_head', 'theme_favicons' );
 
+
+	function my_admin_head()
+	{
+		$favicon = get_option( 'favicon', "" );
+
+		if ( $favicon != "" )
+		{
+			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
+		}
+
+
+		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
+
+		if ( $apple_touch_icon != "" )
+		{
+			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
+
+			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . $apple_touch_icon_no_ext . '-144x144.png' . '">' . "\n";
+		}
+		// end if
+	}
+	// end my_admin_head
+
+	add_action( 'admin_head', 'my_admin_head' );
+
+
+	function my_login_head()
+	{
+		$logo_login_hide = get_option( 'logo_login_hide', false );
+		$logo_login = get_option( 'logo_login', "" );
+
+		if ( $logo_login_hide )
+		{
+			echo '<style type="text/css"> h1 { display: none; } </style>';
+		}
+		else
+		{
+			if ( $logo_login != "" )
+			{
+				echo '<style type="text/css"> h1 a { cursor: default; background-image: url("' . $logo_login . '") !important; }</style>';
+
+				echo '<script>
+						jQuery(document).ready( function($)
+						{
+							jQuery( "h1 a" ).removeAttr( "title" );
+							jQuery( "h1 a" ).removeAttr( "href" );
+						});
+					</script>';
+			}
+			// end if
+		}
+		// end if
+
+
+		$favicon = get_option( 'favicon', "" );
+
+		if ( $favicon != "" )
+		{
+			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
+		}
+
+
+		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
+
+		if ( $apple_touch_icon != "" )
+		{
+			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
+
+			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
+			echo '<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . $apple_touch_icon_no_ext . '-144x144.png' . '">' . "\n";
+		}
+		// end if
+	}
+	// end my_login_head
+
+	add_action( 'login_head', 'my_login_head' );
+
 /* ============================================================================================================================================= */
 
 	function theme_wp_title( $title, $sep )
@@ -358,7 +475,7 @@
 	{
 		$content_width = 780;
 	}
-	// end content_width
+	// end if
 
 /* ============================================================================================================================================= */
 
@@ -383,7 +500,7 @@
 		add_image_size( 'apple_touch_icon_114', 114, 114, true );
 		add_image_size( 'apple_touch_icon_144', 144, 144, true );
 	}
-	// end add_image_size
+	// end if
 
 /* ============================================================================================================================================= */
 
@@ -391,16 +508,21 @@
 	{
 		register_nav_menus( array(  'top_menu' => __( 'Navigation Menu', 'read' ) ) );
 	}
-	// end register_nav_menus
+	// end if
 
 
 	function wp_page_menu2( $args = array() )
 	{
-		$defaults = array('sort_column' => 'menu_order, post_title', 'menu_class' => 'menu', 'echo' => true, 'link_before' => '', 'link_after' => '');
+		$defaults = array(  'sort_column' => 'menu_order, post_title',
+							'menu_class' => 'menu',
+							'echo' => true,
+							'link_before' => "",
+							'link_after' => "" );
+
 		$args = wp_parse_args( $args, $defaults );
 		$args = apply_filters( 'wp_page_menu_args', $args );
 
-		$menu = '';
+		$menu = "";
 
 		$list_args = $args;
 
@@ -408,13 +530,21 @@
 		if ( ! empty($args['show_home']) )
 		{
 			if ( true === $args['show_home'] || '1' === $args['show_home'] || 1 === $args['show_home'] )
+			{
 				$text = __( 'Home', 'read' );
+			}
 			else
+			{
 				$text = $args['show_home'];
-			$class = '';
+			}
+
+			$class = "";
 
 			if ( is_front_page() && !is_paged() )
+			{
 				$class = 'class="current_page_item"';
+			}
+
 			$menu .= '<li ' . $class . '><a href="' . home_url( '/' ) . '" title="' . esc_attr($text) . '">' . $args['link_before'] . $text . $args['link_after'] . '</a></li>';
 
 			// If the front page is a page, add it to the exclude list
@@ -428,24 +558,34 @@
 				{
 					$list_args['exclude'] = '';
 				}
+
 				$list_args['exclude'] .= get_option('page_on_front');
 			}
+			// end if
 		}
+		// end if
 
 		$list_args['echo'] = false;
-		$list_args['title_li'] = '';
-		$menu .= str_replace( array( "\r", "\n", "\t" ), '', wp_list_pages($list_args) );
+		$list_args['title_li'] = "";
+		$menu .= str_replace( array( "\r", "\n", "\t" ), "", wp_list_pages( $list_args ) );
 
 		if ( $menu )
+		{
 			$menu = '<ul class="menu-default">' . $menu . '</ul>';
+		}
 
 		$menu = $menu . "\n";
 		$menu = apply_filters( 'wp_page_menu', $menu, $args );
 
 		if ( $args['echo'] )
+		{
 			echo $menu;
+		}
 		else
+		{
 			return $menu;
+	}
+		// end if
 	}
 	//end wp_page_menu2
 
@@ -534,7 +674,7 @@
 										'before_title' => '<h3 class="widget-title">',
 										'after_title' => '</h3>' ) );
 			}
-			// end foreach
+			// end for
 		}
 		// end if
 	}
@@ -3377,122 +3517,6 @@
 
 /* ============================================================================================================================================= */
 
-	function theme_enqueue_login()
-	{
-		// Enqueue script
-		wp_enqueue_script( 'jquery' );
-	}
-
-	add_action( 'login_enqueue_scripts', 'theme_enqueue_login' );
-
-
-	function my_login_head()
-	{
-		$logo_login_hide = get_option( 'logo_login_hide', false );
-		$logo_login = get_option( 'logo_login', "" );
-
-		if ( $logo_login_hide )
-		{
-			echo '<style type="text/css"> h1 { display: none; } </style>';
-		}
-		else
-		{
-			if ( $logo_login != "" )
-			{
-				echo '<style type="text/css"> h1 a { cursor: default; background-image: url("' . $logo_login . '") !important; }</style>';
-
-				echo '<script>
-						jQuery(document).ready( function($)
-						{
-							jQuery( "h1 a" ).removeAttr( "title" );
-							jQuery( "h1 a" ).removeAttr( "href" );
-						});
-					</script>';
-			}
-			// end if
-		}
-		// end if
-
-
-		$favicon = get_option( 'favicon', "" );
-
-		if ( $favicon != "" )
-		{
-			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
-		}
-
-
-		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
-
-		if ( $apple_touch_icon != "" )
-		{
-			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
-
-			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . $apple_touch_icon_no_ext . '-144x144.png' . '">' . "\n";
-		}
-		// end if
-	}
-	// end my_login_head
-
-	add_action( 'login_head', 'my_login_head' );
-
-/* ============================================================================================================================================= */
-
-	function my_admin_head()
-	{
-		$favicon = get_option( 'favicon', "" );
-
-		if ( $favicon != "" )
-		{
-			echo '<link rel="shortcut icon" href="' . $favicon . '">' . "\n";
-		}
-
-
-		$apple_touch_icon = get_option( 'apple_touch_icon', "" );
-
-		if ( $apple_touch_icon != "" )
-		{
-			$apple_touch_icon_no_ext = substr( $apple_touch_icon, 0, -4 );
-
-			echo '<link rel="apple-touch-icon-precomposed" href="' . $apple_touch_icon_no_ext . '-57x57.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="72x72" href="' . $apple_touch_icon_no_ext . '-72x72.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="114x114" href="' . $apple_touch_icon_no_ext . '-114x114.png' . '">' . "\n";
-			echo '<link rel="apple-touch-icon-precomposed" sizes="144x144" href="' . $apple_touch_icon_no_ext . '-144x144.png' . '">' . "\n";
-		}
-		// end if
-	}
-	// end my_admin_head
-
-	add_action( 'admin_head', 'my_admin_head' );
-
-/* ============================================================================================================================================= */
-
-	function your_admin_enqueue_scripts()
-	{
-		// Register style
-		wp_register_style( 'adminstyle', get_template_directory_uri() . '/admin/adminstyle.css' );
-		wp_register_style( 'colorpicker', get_template_directory_uri() . '/admin/colorpicker/colorpicker.css' );
-
-
-		// Enqueue style
-		wp_enqueue_style( 'thickbox' );
-		wp_enqueue_style( 'adminstyle' );
-		wp_enqueue_style( 'colorpicker' );
-
-
-		// Enqueue script
-		wp_enqueue_script( 'thickbox' );
-		wp_enqueue_script( 'media-upload' );
-	}
-	// end your_admin_enqueue_scripts
-
-	add_action( 'admin_enqueue_scripts', 'your_admin_enqueue_scripts' );
-
-/* ============================================================================================================================================= */
-
 	if ( is_admin() )
 	{
 		include_once 'theme-options.php';
@@ -3602,25 +3626,118 @@
 
 	function theme_customize_css()
 	{
+		global $subset;
+
+		$extra_font_styles = get_option( 'extra_font_styles', 'No' );
+
+		if ( $extra_font_styles == 'Yes' )
+		{
+			$font_styles = ':300,400,600,700,800,900,300italic,400italic,600italic,700italic,800italic,900italic';
+		}
+		else
+		{
+			$font_styles = "";
+		}
+
+		?>
+
+<?php
+	$setting_text_logo_font = get_theme_mod( 'setting_text_logo_font', "" );
+
+	if ( $setting_text_logo_font != "" )
+	{
+		// echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_text_logo_font . $font_styles . $subset . '">';
+	}
+?>
+
+<?php
+	$setting_heading_font = get_theme_mod( 'setting_heading_font', "" );
+
+	if ( $setting_heading_font != "" )
+	{
+		// echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_heading_font . $font_styles . $subset . '">';
+	}
+?>
+
+<?php
+	$setting_menu_font = get_theme_mod( 'setting_menu_font', "" );
+
+	if ( $setting_menu_font != "" )
+	{
+		// echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_menu_font . $font_styles . $subset . '">';
+	}
+?>
+
+<?php
+	$setting_content_font = get_theme_mod( 'setting_content_font', "" );
+
+	if ( $setting_content_font != "" )
+	{
+		// echo '<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=' . $setting_content_font . $font_styles . $subset . '">';
+	}
         ?>
+
 <style type="text/css">
 <?php
 	$setting_link_color = get_theme_mod( 'setting_link_color', "" );
+
 	if ( $setting_link_color != "" )
 	{
 		echo 'a { color: ' . $setting_link_color . '; }' . "\n";
 	}
+?>
 
+<?php
     $setting_link_hover_color = get_theme_mod('setting_link_hover_color', "");
+
                             if ( $setting_link_hover_color != "" )
 	{
 		echo 'a:hover { color: ' . $setting_link_hover_color . '; }' . "\n";
 	}
+?>
 
+<?php
     $setting_menu_active_color = get_theme_mod('setting_menu_active_color', "");
+
                             if ( $setting_menu_active_color != "" )
 	{
 		echo '.main-navigation ul .current_page_item > a, .main-navigation ul .current-menu-item > a { color: ' . $setting_menu_active_color . '; }' . "\n";
+	}
+?>
+
+<?php
+	$setting_text_logo_font = get_theme_mod( 'setting_text_logo_font', "" );
+
+	if ( $setting_text_logo_font != "" )
+	{
+		//echo 'h1.site-title, h1.site-title a { font-family: "' . $setting_text_logo_font . '", Georgia, serif; }' . "\n";
+	}
+?>
+
+<?php
+	$setting_heading_font = get_theme_mod( 'setting_heading_font', "" );
+
+	if ( $setting_heading_font != "" )
+	{
+		//echo 'h1, h2, h3, h4, h5, h6 { font-family: "' . $setting_heading_font . '", Georgia, serif; }' . "\n";
+	}
+?>
+
+<?php
+	$setting_menu_font = get_theme_mod( 'setting_menu_font', "" );
+
+	if ( $setting_menu_font != "" )
+	{
+		//echo '.main-navigation ul li { font-family: "' . $setting_menu_font . '", Georgia, serif; }' . "\n";
+	}
+?>
+
+<?php
+	$setting_content_font = get_theme_mod( 'setting_content_font', "" );
+
+	if ( $setting_content_font != "" )
+	{
+		//echo 'html { font-family: "' . $setting_content_font . '", Georgia, serif; }' . "\n";
 	}
 ?>
 </style>
